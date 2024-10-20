@@ -60,7 +60,66 @@ export const transformSpell = spell => ({
   school: spell.school.name,
 });
 
-export const fetchSpells = async () => {
-  const { data } = await apolloClient.query({ query: generateQuery });
+export const getPaginationVariables = ({ pageNumber, perPage }) => {
+  const limit = perPage < 1
+    ? 20
+    : perPage;
+  const skip = pageNumber < 2
+    ? 0
+    : (pageNumber - 1) * limit;
+
+  return {
+    limit,
+    skip,
+  };
+};
+
+const sortFields = {
+  level: 'LEVEL',
+  name: 'NAME',
+  school: 'SCHOOL',
+};
+
+const sortDirection = {
+  asc: 'ASCENDING',
+  desc: 'DESCENDING',
+};
+
+export const getOrderVariables = ([first, ...rest] = []) => {
+  if (!first) {
+    return;
+  }
+
+  const variables = {
+    by: sortFields[first.by],
+    direction: sortDirection[first.direction],
+  };
+
+  return rest.length === 0
+    ? variables
+    : {
+      ...variables,
+      thenBy: getOrderVariables(rest),
+    };
+};
+
+export const fetchSpells = async (options = {}) => {
+  const {
+    order = [{ by: 'name', direction: 'asc' }],
+    pageNumber = 1,
+    perPage = 20,
+  } = options;
+  const variables = getPaginationVariables({ pageNumber, perPage });
+  const orderVariables = getOrderVariables(order);
+
+  if (orderVariables) {
+    variables.order = orderVariables;
+  }
+
+  const { data } = await apolloClient.query({
+    query: generateQuery,
+    variables,
+  });
+
   return data?.spells ?? [];
 };
