@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetchSpells } from './api/fetchSpells';
+import { fetchSpells, transformSpell } from './api/fetchSpells';
 import './App.css';
 
 const App = () => {
@@ -7,7 +7,7 @@ const App = () => {
 
   useEffect(() => {
     fetchSpells().then((spells) => {
-      setSpells(spells);
+      setSpells(spells.map(transformSpell));
     });
   }, []);
 
@@ -21,11 +21,22 @@ const App = () => {
           <p>Hello, world!</p>
         ) : (
           <table>
+            <thead>
+              <tr>
+                {Object.keys(spells[0]).map(key => (
+                  <th key={key}>{key}</th>
+                ))}
+              </tr>
+            </thead>
             <tbody>
               {spells.map(spell => (
                 <tr key={spell.index}>
-                  <td>{spell.level}</td>
-                  <td>{spell.name}</td>
+                  {Object.entries(spell).map(([key, value]) => {
+                    if (key === 'index') {
+                      return null;
+                    }
+                    return <td key={key}>{typeof value === 'object' ? '[object]' : value}</td>;
+                  })}
                 </tr>
               ))}
             </tbody>
