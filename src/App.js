@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fetchSpells, transformSpell } from './api/fetchSpells';
+import { SpellsTable } from './spells/spells-table';
 import './App.css';
 
 const App = () => {
@@ -17,31 +18,7 @@ const App = () => {
         5eSRD
       </header>
       <div className="App-main">
-        {spells.length === 0 ? (
-          <p>Hello, world!</p>
-        ) : (
-          <table>
-            <thead>
-              <tr>
-                {Object.keys(spells[0]).map(key => (
-                  <th key={key}>{key}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {spells.map(spell => (
-                <tr key={spell.index}>
-                  {Object.entries(spell).map(([key, value]) => {
-                    if (key === 'index') {
-                      return null;
-                    }
-                    return <td key={key}>{typeof value === 'object' ? '[object]' : value}</td>;
-                  })}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+        <SpellsTable spells={spells} />
       </div>
     </div>
   );
