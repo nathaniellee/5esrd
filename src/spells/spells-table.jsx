@@ -18,6 +18,7 @@ import {
   attackTypesMapping,
   spellLevels,
 } from '../constants';
+import { Paginator } from '../common/paginator';
 import { AreaOfEffect } from './area-of-effect';
 
 const useStyles = makeStyles({
@@ -70,7 +71,14 @@ DurationCellContent.propTypes = {
   requiresConcentration: PropTypes.bool.isRequired,
 };
 
-export const SpellsTable = ({ spells }) => {
+export const SpellsTable = ({
+  onNextPage,
+  onPrevPage,
+  pageNumber,
+  perPage,
+  spells,
+  totalSpellCount,
+}) => {
   const styles = useStyles();
 
   const columns = [
@@ -128,11 +136,22 @@ export const SpellsTable = ({ spells }) => {
           })}
         </TableBody>
       </Table>
+      <Paginator
+        onClickNext={onNextPage}
+        onClickPrev={onPrevPage}
+        pageNumber={pageNumber}
+        perPage={perPage}
+        totalCount={totalSpellCount}
+      />
     </div>
   );
 };
 
 SpellsTable.propTypes = {
+  onNextPage: PropTypes.func.isRequired,
+  onPrevPage: PropTypes.func.isRequired,
+  pageNumber: PropTypes.number.isRequired,
+  perPage: PropTypes.number.isRequired,
   spells: PropTypes.arrayOf(PropTypes.shape({
     areaOfEffect: PropTypes.shape({
       size: PropTypes.number.isRequired,
@@ -155,8 +174,9 @@ SpellsTable.propTypes = {
     requiresConcentration: PropTypes.bool.isRequired,
     school: PropTypes.string.isRequired,
   })),
+  totalSpellCount: PropTypes.number,
 };
 
 SpellsTable.defaultProps = {
-  attackType: null,
+  totalSpellCount: 0,
 };
