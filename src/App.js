@@ -6,6 +6,7 @@ import {
 } from './api/fetchSpells';
 import { SpellsTable } from './spells/spells-table';
 import './App.css';
+import { SpellsLoadingContext } from './contexts';
 
 const DEFAULT_PAGE_NUMBER = 1;
 const DEFAULT_PER_PAGE = 20;
@@ -63,14 +64,16 @@ const App = () => {
         5eSRD
       </header>
       <div className="App-main">
-        <SpellsTable
-          onNextPage={onNextPage}
-          onPrevPage={onPrevPage}
-          pageNumber={pageNumber}
-          perPage={perPage}
-          spells={spells}
-          totalSpellCount={totalSpellCount}
-        />
+        <SpellsLoadingContext.Provider value={isLoading}>
+          <SpellsTable
+            onNextPage={onNextPage}
+            onPrevPage={onPrevPage}
+            pageNumber={pageNumber}
+            perPage={perPage}
+            spells={spells}
+            totalSpellCount={totalSpellCount}
+          />
+        </SpellsLoadingContext.Provider>
       </div>
     </div>
   );

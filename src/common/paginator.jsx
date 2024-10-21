@@ -14,6 +14,7 @@ const useStyles = makeStyles({
 });
 
 export const Paginator = ({
+  isDisabled = false,
   onClickNext,
   onClickPrev,
   pageNumber,
@@ -36,13 +37,13 @@ export const Paginator = ({
       </div>
       <div>
         <Button
-          appearance="transparent"
-          disabled={isPrevDisabled}
+          appearance="subtle"
+          disabled={isDisabled || isPrevDisabled}
           onClick={onClickPrev}
         >Prev</Button>
         <Button
-          appearance="transparent"
-          disabled={isNextDisabled}
+          appearance="subtle"
+          disabled={isDisabled || isNextDisabled}
           onClick={onClickNext}
         >Next</Button>
       </div>
@@ -51,6 +52,7 @@ export const Paginator = ({
 };
 
 Paginator.propTypes = {
+  isDisabled: PropTypes.bool,
   onClickNext: PropTypes.func.isRequired,
   onClickPrev: PropTypes.func.isRequired,
   pageNumber: PropTypes.number.isRequired,

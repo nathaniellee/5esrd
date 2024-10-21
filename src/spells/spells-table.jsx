@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Table,
   TableBody,
@@ -20,6 +20,7 @@ import {
 } from '../constants';
 import { Paginator } from '../common/paginator';
 import { AreaOfEffect } from './area-of-effect';
+import { SpellsLoadingContext } from '../contexts';
 
 const useStyles = makeStyles({
   concentration: {
@@ -91,6 +92,7 @@ export const SpellsTable = ({
     { columnKey: 'areaOfEffect', label: 'Area of Effect' },
     { columnKey: 'attackSave', label: 'Attack/Save' },
   ];
+  const isPaginationControlsDisabled = useContext(SpellsLoadingContext);
 
   return (
     <div>
@@ -137,6 +139,7 @@ export const SpellsTable = ({
         </TableBody>
       </Table>
       <Paginator
+        isDisabled={isPaginationControlsDisabled}
         onClickNext={onNextPage}
         onClickPrev={onPrevPage}
         pageNumber={pageNumber}
