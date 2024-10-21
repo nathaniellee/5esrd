@@ -123,3 +123,21 @@ export const fetchSpells = async (options = {}) => {
 
   return data?.spells ?? [];
 };
+
+// Have to do this for the time being as the GraphQL endpoint doesn't seem to return count as part of the response.
+export const fetchTotalSpellCount = async () => {
+  const url = 'https://www.dnd5eapi.co/api/spells';
+
+  try {
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`There was an issue fetching from the spells endpoint. Response.status: ${response.status}`);
+    }
+
+    const json = await response.json();
+    return json.count;
+  } catch (error) {
+    console.error(error.message);
+  }
+};
