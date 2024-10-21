@@ -44,9 +44,7 @@ export const transformSpell = spell => ({
   attackType: spell.attack_type,
   castingTime: spell.casting_time,
   components: spell.components.join(', '),
-  damageType: spell.damage != null
-    ? spell.damage.damage_type.name
-    : null,
+  damageType: spell?.damage?.damage_type?.name ?? null,
   duration: spell.duration,
   id: spell.index,
   isRitual: spell.ritual,
@@ -54,9 +52,7 @@ export const transformSpell = spell => ({
   name: spell.name,
   range: spell.range,
   requiresConcentration: spell.concentration,
-  saveType: spell.dc != null
-    ? spell.dc.type.name
-    : null,
+  saveType: spell?.dc?.type?.name ?? null,
   school: spell.school.name,
 });
 
