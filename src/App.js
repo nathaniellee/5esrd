@@ -19,6 +19,11 @@ const App = () => {
 
   const perPage = DEFAULT_PER_PAGE;
 
+  const onDoneFetchSpells = useCallback((spells) => {
+    setSpells(spells.map(transformSpell));
+    setIsLoading(false);
+  }, []);
+
   const onNextPage = useCallback(() => {
     const newPageNumber = pageNumber + 1;
     setPageNumber(newPageNumber);
@@ -26,10 +31,7 @@ const App = () => {
     fetchSpells({
       pageNumber: newPageNumber,
       perPage,
-    }).then((spells) => {
-      setSpells(spells.map(transformSpell));
-      setIsLoading(false);
-    });
+    }).then(onDoneFetchSpells);
   }, [pageNumber]);
 
   const onPrevPage = useCallback(() => {
@@ -39,10 +41,7 @@ const App = () => {
     fetchSpells({
       pageNumber: newPageNumber,
       perPage,
-    }).then((spells) => {
-      setSpells(spells.map(transformSpell));
-      setIsLoading(false);
-    });
+    }).then(onDoneFetchSpells);
   }, [pageNumber]);
 
   useEffect(() => {
@@ -51,10 +50,7 @@ const App = () => {
       fetchSpells({
         pageNumber,
         perPage,
-      }).then((spells) => {
-        setSpells(spells.map(transformSpell));
-        setIsLoading(false);
-      });
+      }).then(onDoneFetchSpells);
     });
   }, []);
 
