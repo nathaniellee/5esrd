@@ -31,12 +31,21 @@ const App = () => {
   const perPage = DEFAULT_PER_PAGE;
 
   const onChangeSort = useCallback(({ columnKey, sortDirection }) => {
+    const order = [{
+      by: columnKey,
+      direction: SORT_DIRECTION[sortDirection],
+    }];
+
+    if (columnKey !== 'name') {
+      order.push({
+        by: 'name',
+        direction: SORT_DIRECTION[sortDirection],
+      });
+    }
+
     setPageNumber(DEFAULT_PAGE_NUMBER);
     fetchSpells({
-      order: [{
-        by: columnKey,
-        direction: SORT_DIRECTION[sortDirection],
-      }],
+      order,
       pageNumber: DEFAULT_PAGE_NUMBER,
       perPage,
     }).then(onDoneFetchSpells);

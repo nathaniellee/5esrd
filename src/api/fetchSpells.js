@@ -95,7 +95,7 @@ export const getOrderVariables = ([first, ...rest] = []) => {
     ? variables
     : {
       ...variables,
-      thenBy: getOrderVariables(rest),
+      then_by: getOrderVariables(rest),
     };
 };
 
