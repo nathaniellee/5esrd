@@ -19,8 +19,8 @@ import {
   spellLevels,
 } from '../constants';
 import { Paginator } from '../common/paginator';
-import { AreaOfEffect } from './area-of-effect';
 import { SpellsLoadingContext } from '../contexts';
+import { AreaOfEffect } from './area-of-effect';
 
 const useStyles = makeStyles({
   concentration: {
@@ -75,6 +75,7 @@ DurationCellContent.propTypes = {
 export const SpellsTable = ({
   onNextPage,
   onPrevPage,
+  onSelectSpell,
   pageNumber,
   perPage,
   spells,
@@ -110,7 +111,10 @@ export const SpellsTable = ({
         <TableBody>
           {spells.map((spell) => {
             return (
-              <TableRow key={spell.id}>
+              <TableRow
+                key={spell.id}
+                onClick={() => { onSelectSpell(spell.id); }}
+              >
                 <TableCell>{spell.name}</TableCell>
                 <TableCell>{spellLevels[spell.level]}</TableCell>
                 <TableCell>{spell.school}</TableCell>
@@ -153,6 +157,7 @@ export const SpellsTable = ({
 SpellsTable.propTypes = {
   onNextPage: PropTypes.func.isRequired,
   onPrevPage: PropTypes.func.isRequired,
+  onSelectSpell: PropTypes.func.isRequired,
   pageNumber: PropTypes.number.isRequired,
   perPage: PropTypes.number.isRequired,
   spells: PropTypes.arrayOf(PropTypes.shape({

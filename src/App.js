@@ -4,18 +4,25 @@ import {
   fetchTotalSpellCount,
   transformSpell,
 } from './api/fetchSpells';
+import {
+  fetchSpell,
+  transformSpell as transformDialogSpell,
+} from './api/fetchSpell';
 import { SpellsTable } from './spells/spells-table';
 import './App.css';
 import { SpellsLoadingContext } from './contexts';
+import { SpellDialog } from './spells/spell-dialog';
 
 const DEFAULT_PAGE_NUMBER = 1;
 const DEFAULT_PER_PAGE = 20;
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [spell, setSpell] = useState();
   const [spells, setSpells] = useState([]);
   const [pageNumber, setPageNumber] = useState(DEFAULT_PAGE_NUMBER);
   const [totalSpellCount, setTotalSpellCount] = useState(0);
+  const [showSpellDialog, setShowSpellDialog] = useState(false);
 
   const perPage = DEFAULT_PER_PAGE;
 
@@ -44,6 +51,17 @@ const App = () => {
     }).then(onDoneFetchSpells);
   }, [pageNumber]);
 
+  const onSelectSpell = useCallback((id) => {
+    fetchSpell(id).then((spell) => {
+      setSpell(transformDialogSpell(spell));
+      setShowSpellDialog(true);
+    });
+  }, []);
+
+  const onCloseSpellDialog = useCallback(() => {
+    setShowSpellDialog(false);
+  }, []);
+
   useEffect(() => {
     fetchTotalSpellCount().then((count) => {
       setTotalSpellCount(count);
@@ -64,6 +82,7 @@ const App = () => {
           <SpellsTable
             onNextPage={onNextPage}
             onPrevPage={onPrevPage}
+            onSelectSpell={onSelectSpell}
             pageNumber={pageNumber}
             perPage={perPage}
             spells={spells}
@@ -71,6 +90,11 @@ const App = () => {
           />
         </SpellsLoadingContext.Provider>
       </div>
+      <SpellDialog
+        isOpen={showSpellDialog}
+        onClose={onCloseSpellDialog}
+        spell={spell}
+      />
     </div>
   );
 };
