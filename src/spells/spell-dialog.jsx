@@ -1,12 +1,15 @@
 import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 import {
+  Button,
   Dialog,
   DialogBody,
   DialogContent,
   DialogSurface,
   DialogTitle,
+  DialogTrigger,
 } from '@fluentui/react-components';
+import { Dismiss24Regular } from '@fluentui/react-icons';
 
 export const SpellDialog = ({
   isOpen = false,
@@ -22,7 +25,13 @@ export const SpellDialog = ({
     <Dialog open={isOpen} onOpenChange={onChangeIsOpen}>
       <DialogSurface>
         <DialogBody>
-          <DialogTitle>{spell?.name ?? 'No spell selected'}</DialogTitle>
+          <DialogTitle
+            action={
+              <DialogTrigger action="close">
+                <Dismiss24Regular />
+              </DialogTrigger>
+            }
+          >{spell?.name ?? 'No spell selected'}</DialogTitle>
           <DialogContent>
             {spell?.description
               ? spell.description.map((paragraph, i) => (
