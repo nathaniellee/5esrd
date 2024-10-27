@@ -9,6 +9,7 @@ import {
   DialogTrigger,
 } from '@fluentui/react-components';
 import { Dismiss24Regular } from '@fluentui/react-icons';
+import { SpellInfo } from './spell-info';
 
 export const SpellDialog = ({
   isOpen = false,
@@ -30,14 +31,13 @@ export const SpellDialog = ({
                 <Dismiss24Regular />
               </DialogTrigger>
             }
-          >{spell?.name ?? 'No spell selected'}</DialogTitle>
+          >{spell && spell.name}</DialogTitle>
           <DialogContent>
-            {spell?.description
-              ? spell.description.map((paragraph, i) => (
-                <p key={i}>{paragraph}</p>
-              ))
-              : <p>Please select a spell to see its information.</p>
-            }
+            {spell ? (
+              <SpellInfo {...spell} />
+            ) : (
+              <p>No spell selected</p>
+            )}
           </DialogContent>
         </DialogBody>
       </DialogSurface>
@@ -49,7 +49,6 @@ SpellDialog.propTypes = {
   isOpen: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
   spell: PropTypes.shape({
-    description: PropTypes.arrayOf(PropTypes.string).isRequired,
     name: PropTypes.string.isRequired,
   }),
 };
