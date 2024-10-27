@@ -15,6 +15,10 @@ import { SpellDialog } from './spells/spell-dialog';
 
 const DEFAULT_PAGE_NUMBER = 1;
 const DEFAULT_PER_PAGE = 20;
+const SORT_DIRECTION = {
+  ascending: 'asc',
+  descending: 'desc',
+};
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -25,6 +29,18 @@ const App = () => {
   const [showSpellDialog, setShowSpellDialog] = useState(false);
 
   const perPage = DEFAULT_PER_PAGE;
+
+  const onChangeSort = useCallback(({ columnKey, sortDirection }) => {
+    setPageNumber(DEFAULT_PAGE_NUMBER);
+    fetchSpells({
+      order: [{
+        by: columnKey,
+        direction: SORT_DIRECTION[sortDirection],
+      }],
+      pageNumber: DEFAULT_PAGE_NUMBER,
+      perPage,
+    }).then(onDoneFetchSpells);
+  });
 
   const onDoneFetchSpells = useCallback((spells) => {
     setSpells(spells.map(transformSpell));
@@ -80,6 +96,7 @@ const App = () => {
       <div className="App-main">
         <SpellsLoadingContext.Provider value={isLoading}>
           <SpellsTable
+            onChangeSort={onChangeSort}
             onNextPage={onNextPage}
             onPrevPage={onPrevPage}
             onSelectSpell={onSelectSpell}

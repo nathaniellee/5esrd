@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useContext } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import {
   Table,
   TableBody,
@@ -72,37 +72,75 @@ DurationCellContent.propTypes = {
   requiresConcentration: PropTypes.bool.isRequired,
 };
 
+const columns = [
+  { columnKey: 'name', label: 'Name' },
+  { columnKey: 'level', label: 'Level' },
+  { columnKey: 'school', label: 'Spell School' },
+  { columnKey: 'castingTime', label: 'Casting Time' },
+  { columnKey: 'duration', label: 'Duration' },
+  { columnKey: 'range', label: 'Range' },
+  { columnKey: 'areaOfEffect', label: 'Area of Effect' },
+  { columnKey: 'attackSave', label: 'Attack/Save' },
+];
+const sortableColumns = [
+  'name',
+  'level',
+  'school',
+];
+const isSortableColumn = columnKey => sortableColumns.includes(columnKey);
+
 export const SpellsTable = ({
+  onChangeSort,
   onNextPage,
   onPrevPage,
   onSelectSpell,
   pageNumber,
   perPage,
   spells,
-  totalSpellCount,
+  totalSpellCount = 0,
 }) => {
   const styles = useStyles();
-
-  const columns = [
-    { columnKey: 'name', label: 'Name' },
-    { columnKey: 'level', label: 'Level' },
-    { columnKey: 'school', label: 'Spell School' },
-    { columnKey: 'castingTime', label: 'Casting Time' },
-    { columnKey: 'duration', label: 'Duration' },
-    { columnKey: 'range', label: 'Range' },
-    { columnKey: 'areaOfEffect', label: 'Area of Effect' },
-    { columnKey: 'attackSave', label: 'Attack/Save' },
-  ];
   const isPaginationControlsDisabled = useContext(SpellsLoadingContext);
+
+  const [sortDirection, setSortDirection] = useState('ascending');
+  const [sortedColumn, setSortedColumn] = useState(sortableColumns[0]);
+
+  const onClickTableHeaderCell = useCallback((columnKey) => {
+    if (columnKey !== sortedColumn) {
+      setSortedColumn(columnKey);
+      setSortDirection('ascending');
+      onChangeSort({
+        columnKey,
+        sortDirection: 'ascending',
+      });
+    } else {
+      const newSortDirection = sortDirection === 'ascending' ? 'descending' : 'ascending';
+      setSortDirection(newSortDirection);
+      onChangeSort({
+        columnKey,
+        sortDirection: newSortDirection,
+      })
+    }
+  }, [sortDirection, sortedColumn]);
 
   return (
     <div>
       <Title1>Spells</Title1>
-      <Table>
+      <Table sortable>
         <TableHeader>
           <TableRow>
             {columns.map(({ columnKey, label }) => (
-              <TableHeaderCell key={columnKey} className={styles.th}>
+              <TableHeaderCell
+                key={columnKey}
+                className={styles.th}
+                onClick={() => {
+                  if (isSortableColumn(columnKey)) {
+                    onClickTableHeaderCell(columnKey);
+                  }
+                }}
+                sortDirection={sortedColumn === columnKey ? sortDirection : undefined}
+                sortable={isSortableColumn(columnKey)}
+              >
                 {label}
               </TableHeaderCell>
             ))}
@@ -155,6 +193,7 @@ export const SpellsTable = ({
 };
 
 SpellsTable.propTypes = {
+  onChangeSort: PropTypes.func.isRequired,
   onNextPage: PropTypes.func.isRequired,
   onPrevPage: PropTypes.func.isRequired,
   onSelectSpell: PropTypes.func.isRequired,
@@ -183,8 +222,4 @@ SpellsTable.propTypes = {
     school: PropTypes.string.isRequired,
   })),
   totalSpellCount: PropTypes.number,
-};
-
-SpellsTable.defaultProps = {
-  totalSpellCount: 0,
 };
