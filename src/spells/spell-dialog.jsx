@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 import {
-  Button,
   Dialog,
   DialogBody,
   DialogContent,
@@ -50,7 +49,7 @@ SpellDialog.propTypes = {
   isOpen: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
   spell: PropTypes.shape({
-    description: PropTypes.string.isRequired,
+    description: PropTypes.arrayOf(PropTypes.string).isRequired,
     name: PropTypes.string.isRequired,
   }),
 };
