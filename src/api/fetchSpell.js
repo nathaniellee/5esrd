@@ -59,12 +59,6 @@ const generateQuery = gql`
 `;
 
 export const transformSpell = (spell) => {
-  const classesSubclasses = [
-    ...spell.classes,
-    ...spell.subclasses,
-  ];
-  const availableTo = classesSubclasses.map(({ name }) => name);
-
   return {
     areaOfEffect: spell.area_of_effect != null
       ? {
@@ -73,9 +67,9 @@ export const transformSpell = (spell) => {
       }
       : null,
     attackType: spell.attack_type,
-    availableTo,
     castingTime: spell.casting_time,
-    components: spell.components.join(', '),
+    classes: spell.classes,
+    components: spell.components,
     damageType: spell?.damage?.damage_type?.name ?? null,
     description: [...spell.desc],
     duration: spell.duration,
@@ -89,6 +83,7 @@ export const transformSpell = (spell) => {
     requiresConcentration: spell.concentration,
     saveType: spell?.dc?.type?.name ?? null,
     school: spell.school.name,
+    subclasses: spell.subclasses,
   };
 };
 
