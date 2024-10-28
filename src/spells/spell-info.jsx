@@ -5,7 +5,9 @@ import {
   makeStyles,
   tokens,
 } from '@fluentui/react-components';
+import { AreaOfEffect } from './area-of-effect';
 import { Components } from './components';
+import { areas } from '../constants';
 import { Duration } from './duration';
 import { HigherLevel } from './higher-level';
 
@@ -22,6 +24,7 @@ const useStyles = makeStyles({
 });
 
 export const SpellInfo = ({
+  areaOfEffect,
   castingTime,
   classes,
   components,
@@ -51,6 +54,12 @@ export const SpellInfo = ({
         <Text className={styles.label} weight="bold">Range:</Text>
         <Text>{range}</Text>
       </div>
+      {areaOfEffect && (
+        <div>
+          <Text className={styles.label} weight="bold">Area of Effect:</Text>
+          <AreaOfEffect {...areaOfEffect} />
+        </div>
+      )}
       <div>
         <Text className={styles.label} weight="bold">Components:</Text>
         <Text>
@@ -80,6 +89,16 @@ export const SpellInfo = ({
 };
 
 SpellInfo.propTypes = {
+  areaOfEffect: PropTypes.shape({
+    size: PropTypes.number.isRequired,
+    type: PropTypes.oneOf([
+      areas.cone,
+      areas.cube,
+      areas.cylinder,
+      areas.line,
+      areas.sphere,
+    ]).isRequired,
+  }),
   castingTime: PropTypes.string.isRequired,
   classes: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
