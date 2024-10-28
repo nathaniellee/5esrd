@@ -70,16 +70,23 @@ export const getPaginationVariables = ({ pageNumber, perPage }) => {
   };
 };
 
-const sortFields = {
+const SORT_FIELDS = {
   level: 'LEVEL',
   name: 'NAME',
   school: 'SCHOOL',
 };
 
-const sortDirection = {
-  asc: 'ASCENDING',
-  desc: 'DESCENDING',
+const SORT_DIRECTION = {
+  ascending: 'ASCENDING',
+  descending: 'DESCENDING',
 };
+
+export const DEFAULT_ORDER = [
+  {
+    by: 'name',
+    direction: 'ascending',
+  },
+];
 
 export const getOrderVariables = ([first, ...rest] = []) => {
   if (!first) {
@@ -87,8 +94,8 @@ export const getOrderVariables = ([first, ...rest] = []) => {
   }
 
   const variables = {
-    by: sortFields[first.by],
-    direction: sortDirection[first.direction],
+    by: SORT_FIELDS[first.by],
+    direction: SORT_DIRECTION[first.direction],
   };
 
   return rest.length === 0
@@ -101,7 +108,7 @@ export const getOrderVariables = ([first, ...rest] = []) => {
 
 export const fetchSpells = async (options = {}) => {
   const {
-    order = [{ by: 'name', direction: 'asc' }],
+    order = DEFAULT_ORDER,
     pageNumber = 1,
     perPage = 20,
   } = options;

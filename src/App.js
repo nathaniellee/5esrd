@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import {
+  DEFAULT_ORDER,
   fetchSpells,
   fetchTotalSpellCount,
   transformSpell,
@@ -15,15 +16,12 @@ import { SpellDialog } from './spells/spell-dialog';
 
 const DEFAULT_PAGE_NUMBER = 1;
 const DEFAULT_PER_PAGE = 20;
-const SORT_DIRECTION = {
-  ascending: 'asc',
-  descending: 'desc',
-};
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [spell, setSpell] = useState();
   const [spells, setSpells] = useState([]);
+  const [order, setOrder] = useState(DEFAULT_ORDER);
   const [pageNumber, setPageNumber] = useState(DEFAULT_PAGE_NUMBER);
   const [totalSpellCount, setTotalSpellCount] = useState(0);
   const [showSpellDialog, setShowSpellDialog] = useState(false);
@@ -31,21 +29,21 @@ const App = () => {
   const perPage = DEFAULT_PER_PAGE;
 
   const onChangeSort = useCallback(({ columnKey, sortDirection }) => {
-    const order = [{
+    const newOrder = [{
       by: columnKey,
-      direction: SORT_DIRECTION[sortDirection],
+      direction: sortDirection,
     }];
 
     if (columnKey !== 'name') {
-      order.push({
+      newOrder.push({
         by: 'name',
-        direction: SORT_DIRECTION[sortDirection],
+        direction: sortDirection,
       });
     }
-
+    setOrder(newOrder);
     setPageNumber(DEFAULT_PAGE_NUMBER);
     fetchSpells({
-      order,
+      order: newOrder,
       pageNumber: DEFAULT_PAGE_NUMBER,
       perPage,
     }).then(onDoneFetchSpells);
@@ -61,20 +59,22 @@ const App = () => {
     setPageNumber(newPageNumber);
     setIsLoading(true);
     fetchSpells({
+      order,
       pageNumber: newPageNumber,
       perPage,
     }).then(onDoneFetchSpells);
-  }, [pageNumber]);
+  }, [order, pageNumber, perPage]);
 
   const onPrevPage = useCallback(() => {
     const newPageNumber = pageNumber - 1;
     setPageNumber(newPageNumber);
     setIsLoading(true);
     fetchSpells({
+      order,
       pageNumber: newPageNumber,
       perPage,
     }).then(onDoneFetchSpells);
-  }, [pageNumber]);
+  }, [order, pageNumber, perPage]);
 
   const onSelectSpell = useCallback((id) => {
     fetchSpell(id).then((spell) => {
