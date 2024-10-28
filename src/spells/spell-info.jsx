@@ -8,6 +8,7 @@ import {
 import { AreaOfEffect } from './area-of-effect';
 import { Components } from './components';
 import { areas } from '../constants';
+import { Description } from './description';
 import { Duration } from './duration';
 import { HigherLevel } from './higher-level';
 
@@ -76,11 +77,7 @@ export const SpellInfo = ({
           requiresConcentration={requiresConcentration}
         />
       </div>
-      <>
-        {description.map((paragraph, i) => (
-          <p key={i}>{paragraph}</p>
-        ))}
-      </>
+      <Description description={description} />
       {higherLevel?.length && (
         <HigherLevel text={higherLevel[0]} />
       )}
