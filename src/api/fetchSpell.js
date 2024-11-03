@@ -1,4 +1,4 @@
-import { apolloClient, gql } from "./apollo";
+import { apolloClient, gql } from './apollo';
 
 const generateSpellQuery = gql`
   query Spell($index: String) {
