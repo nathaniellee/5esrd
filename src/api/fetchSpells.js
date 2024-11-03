@@ -9,7 +9,7 @@ import {
   getPaginationVariables,
 } from './utils';
 
-const generateQuery = gql`
+const generateSpellsQuery = gql`
   query Spells($limit: Int, $order: SpellOrder, $skip: Int) {
     spells(limit: $limit, order: $order, skip: $skip) {
       index
@@ -79,7 +79,7 @@ export const fetchSpells = async (options = {}) => {
   }
 
   const { data } = await apolloClient.query({
-    query: generateQuery,
+    query: generateSpellsQuery,
     variables,
   });
 

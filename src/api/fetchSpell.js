@@ -1,6 +1,6 @@
 import { apolloClient, gql } from "./apollo";
 
-const generateQuery = gql`
+const generateSpellQuery = gql`
   query Spell($index: String) {
     spell(index: $index) {
       area_of_effect {
@@ -89,7 +89,7 @@ export const transformSpell = (spell) => {
 
 export const fetchSpell = async (key) => {
   const { data } = await apolloClient.query({
-    query: generateQuery,
+    query: generateSpellQuery,
     variables: {
       index: key,
     },
