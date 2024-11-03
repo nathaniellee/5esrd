@@ -53,3 +53,11 @@ export const spellLevels = [
   '8th',
   '9th',
 ];
+
+export const equipmentCategories = {
+  'adventuring-gear': 'Adventuring Gear',
+  armor: 'Armor',
+  'mounts-and-vehicles': 'Mounts and Vehicles',
+  tools: 'Tools',
+  weapon: 'Weapons',
+};
