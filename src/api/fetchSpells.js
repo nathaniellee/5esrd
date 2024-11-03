@@ -1,4 +1,13 @@
-import { apolloClient, gql } from "./apollo";
+import { apolloClient, gql } from './apollo';
+import {
+  DEFAULT_ORDER,
+  DEFAULT_PAGE_NUMBER,
+  DEFAULT_PER_PAGE,
+} from './constants';
+import {
+  getOrderVariables,
+  getPaginationVariables,
+} from './utils';
 
 const generateQuery = gql`
   query Spells($limit: Int, $order: SpellOrder, $skip: Int) {
@@ -56,61 +65,11 @@ export const transformSpell = spell => ({
   school: spell.school.name,
 });
 
-export const getPaginationVariables = ({ pageNumber, perPage }) => {
-  const limit = perPage < 1
-    ? 20
-    : perPage;
-  const skip = pageNumber < 2
-    ? 0
-    : (pageNumber - 1) * limit;
-
-  return {
-    limit,
-    skip,
-  };
-};
-
-const SORT_FIELDS = {
-  level: 'LEVEL',
-  name: 'NAME',
-  school: 'SCHOOL',
-};
-
-const SORT_DIRECTION = {
-  ascending: 'ASCENDING',
-  descending: 'DESCENDING',
-};
-
-export const DEFAULT_ORDER = [
-  {
-    by: 'name',
-    direction: 'ascending',
-  },
-];
-
-export const getOrderVariables = ([first, ...rest] = []) => {
-  if (!first) {
-    return;
-  }
-
-  const variables = {
-    by: SORT_FIELDS[first.by],
-    direction: SORT_DIRECTION[first.direction],
-  };
-
-  return rest.length === 0
-    ? variables
-    : {
-      ...variables,
-      then_by: getOrderVariables(rest),
-    };
-};
-
 export const fetchSpells = async (options = {}) => {
   const {
     order = DEFAULT_ORDER,
-    pageNumber = 1,
-    perPage = 20,
+    pageNumber = DEFAULT_PAGE_NUMBER,
+    perPage = DEFAULT_PER_PAGE,
   } = options;
   const variables = getPaginationVariables({ pageNumber, perPage });
   const orderVariables = getOrderVariables(order);

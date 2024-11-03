@@ -1,10 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import {
+  DEFAULT_ORDER,
+  DEFAULT_PAGE_NUMBER,
+  DEFAULT_PER_PAGE,
+} from '../api/constants';
+import {
   fetchSpell,
   transformSpell as transformDialogSpell,
 } from '../api/fetchSpell';
 import {
-  DEFAULT_ORDER,
   fetchSpells,
   fetchTotalSpellCount,
   transformSpell,
@@ -12,9 +16,6 @@ import {
 import { SpellsLoadingContext } from '../contexts';
 import { SpellsTable } from './spells-table';
 import { SpellDialog } from './spell-dialog';
-
-const DEFAULT_PAGE_NUMBER = 1;
-const DEFAULT_PER_PAGE = 20;
 
 export const Spells = () => {
   const [isLoading, setIsLoading] = useState(true);
