@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Callout, isCallout } from '../common/callout';
+import { Callout, isCallout } from './callout';
 
 export const Description = ({ description }) => (
   <>

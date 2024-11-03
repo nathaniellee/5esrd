@@ -5,17 +5,14 @@ import {
   makeStyles,
   tokens,
 } from '@fluentui/react-components';
+import { Description } from '../common/description';
 import { AreaOfEffect } from './area-of-effect';
 import { Components } from './components';
 import { areas } from '../constants';
-import { Description } from './description';
 import { Duration } from './duration';
 import { HigherLevel } from './higher-level';
 
 const useStyles = makeStyles({
-  bold: {
-    fontWeight: tokens.fontWeightBold,
-  },
   label: {
     marginRight: tokens.spacingHorizontalSNudge,
   },
