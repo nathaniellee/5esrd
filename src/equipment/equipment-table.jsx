@@ -12,7 +12,10 @@ import {
   tokens,
 } from '@fluentui/react-components';
 import { Paginator } from '../common/paginator';
-import { equipmentCategories } from '../constants';
+import {
+  currencies,
+  equipmentCategories,
+} from '../constants';
 
 const useStyles = makeStyles({
   th: {
@@ -32,6 +35,13 @@ const sortableColumns = [
   'equipmentCategory',
 ];
 const isSortableColumn = columnKey => sortableColumns.includes(columnKey);
+
+const getCostString = (quantity, unit) => {
+  if (quantity === 0) {
+    return '--';
+  }
+  return `${quantity} ${currencies[unit]}`;
+};
 
 const getWeightString = (weight) => {
   if (!weight || Number.isNaN(weight)) {
@@ -117,7 +127,7 @@ export const EquipmentTable = ({
           {equipments.map(equipment => (
             <TableRow key={equipment.id}>
               <TableCell>{equipment.name}</TableCell>
-              <TableCell>{`${equipment.cost.quantity} ${equipment.cost.unit}`}</TableCell>
+              <TableCell>{getCostString(equipment.cost.quantity, equipment.cost.unit)}</TableCell>
               <TableCell>{getWeightString(equipment.weight)}</TableCell>
               <TableCell>{equipmentCategories[equipment.equipmentCategory]}</TableCell>
             </TableRow>

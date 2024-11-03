@@ -61,3 +61,11 @@ export const equipmentCategories = {
   tools: 'Tools',
   weapon: 'Weapons',
 };
+
+export const currencies = {
+  CP: 'cp',
+  EP: 'ep',
+  GP: 'gp',
+  PP: 'pp',
+  SP: 'sp',
+};
