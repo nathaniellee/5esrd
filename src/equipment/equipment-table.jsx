@@ -31,7 +31,7 @@ const columns = [
   { columnKey: 'name', label: 'Name' },
   { columnKey: 'cost', label: 'Cost' },
   { columnKey: 'weight', label: 'Weight' },
-  { columnKey: 'equipmentCategory', label: 'Category' },
+  { columnKey: 'equipmentCategory', label: 'Type' },
 ];
 const sortableColumns = [
   'name',
@@ -45,6 +45,7 @@ export const EquipmentTable = ({
   onChangeSort,
   onNextPage,
   onPrevPage,
+  onSelectEquipment,
   pageNumber,
   perPage,
   totalEquipmentCount = 0,
@@ -97,7 +98,10 @@ export const EquipmentTable = ({
         </TableHeader>
         <TableBody>
           {equipments.map(equipment => (
-            <TableRow key={equipment.id}>
+            <TableRow
+              key={equipment.id}
+              onClick={() => { onSelectEquipment(equipment.id); }}
+            >
               <TableCell>{equipment.name}</TableCell>
               <TableCell>{getCostString(equipment.cost.quantity, equipment.cost.unit)}</TableCell>
               <TableCell>{getWeightString(equipment.weight)}</TableCell>
@@ -123,6 +127,7 @@ EquipmentTable.propTypes = {
       quantity: PropTypes.number.isRequired,
       unit: PropTypes.string.isRequired,
     }).isRequired,
+    equipmentCategory: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     weight: PropTypes.number,
@@ -130,6 +135,7 @@ EquipmentTable.propTypes = {
   onChangeSort: PropTypes.func.isRequired,
   onNextPage: PropTypes.func.isRequired,
   onPrevPage: PropTypes.func.isRequired,
+  onSelectEquipment: PropTypes.func.isRequired,
   pageNumber: PropTypes.number.isRequired,
   perPage: PropTypes.number.isRequired,
   totalEquipmentCount: PropTypes.number,

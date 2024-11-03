@@ -5,17 +5,24 @@ import {
   DEFAULT_PER_PAGE,
 } from '../api/constants';
 import {
+  fetchEquipment,
+  transformEquipment as transformDialogEquipment,
+} from '../api/fetchEquipment';
+import {
   fetchEquipments,
   fetchTotalEquipmentCount,
   transformEquipment,
 } from '../api/fetchEquipments';
+import { EquipmentDialog } from './equipment-dialog';
 import { EquipmentTable } from './equipment-table';
 
 export const Equipment = () => {
+  const [equipment, setEquipment] = useState();
   const [equipments, setEquipments] = useState([]);
   const [order, setOrder] = useState(DEFAULT_ORDER);
   const [pageNumber, setPageNumber] = useState(DEFAULT_PAGE_NUMBER);
   const [totalEquipmentCount, setTotalEquipmentCount] = useState(0);
+  const [showEquipmentDialog, setShowEquipmentDialog] = useState(false);
 
   const perPage = DEFAULT_PER_PAGE;
 
@@ -64,6 +71,17 @@ export const Equipment = () => {
     }).then(onDoneFetchEquipments);
   }, [order, pageNumber, perPage]);
 
+  const onSelectEquipment = useCallback((id) => {
+    fetchEquipment(id).then((equipment) => {
+      setEquipment(transformDialogEquipment(equipment));
+      setShowEquipmentDialog(true);
+    });
+  }, []);
+
+  const onCloseEquipmentDialog = useCallback(() => {
+    setShowEquipmentDialog(false);
+  }, []);
+
   useEffect(() => {
     fetchTotalEquipmentCount().then((count) => {
       setTotalEquipmentCount(count);
@@ -81,9 +99,15 @@ export const Equipment = () => {
         onChangeSort={onChangeSort}
         onNextPage={onNextPage}
         onPrevPage={onPrevPage}
+        onSelectEquipment={onSelectEquipment}
         pageNumber={pageNumber}
         perPage={perPage}
         totalEquipmentCount={totalEquipmentCount}
+      />
+      <EquipmentDialog
+        isOpen={showEquipmentDialog}
+        onClose={onCloseEquipmentDialog}
+        equipment={equipment}
       />
     </div>
   );
