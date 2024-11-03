@@ -14,7 +14,9 @@ export const SORT_DIRECTION = {
 };
 
 export const SORT_FIELDS = {
+  equipmentCategory: 'EQUIPMENT_CATEGORY',
   level: 'LEVEL',
   name: 'NAME',
   school: 'SCHOOL',
+  weight: 'WEIGHT',
 };
