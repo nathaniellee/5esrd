@@ -13,9 +13,13 @@ import {
 } from '@fluentui/react-components';
 import { Paginator } from '../common/paginator';
 import {
-  currencies,
   equipmentCategories,
+  sortDirections,
 } from '../constants';
+import {
+  getCostString,
+  getWeightString,
+} from './utils';
 
 const useStyles = makeStyles({
   th: {
@@ -36,38 +40,6 @@ const sortableColumns = [
 ];
 const isSortableColumn = columnKey => sortableColumns.includes(columnKey);
 
-const getCostString = (quantity, unit) => {
-  if (quantity === 0) {
-    return '--';
-  }
-  return `${quantity} ${currencies[unit]}`;
-};
-
-const getWeightString = (weight) => {
-  if (!weight || Number.isNaN(weight)) {
-    return '--';
-  }
-  if (weight === 1) {
-    return '1 lb.';
-  }
-  
-  const integer = Number.parseInt(weight);
-  const decimal = weight - integer;
-
-  if (decimal === 0.25) {
-    return integer === 0
-      ? '1/4 lbs.'
-      : `${integer} 1/4 lbs.`;
-  }
-  if (decimal === 0.5) {
-    return integer === 0
-      ? '1/2 lbs.'
-      : `${integer} 1/2 lbs.`;
-  }
-
-  return `${weight} lbs.`;
-};
-
 export const EquipmentTable = ({
   equipments,
   onChangeSort,
@@ -79,19 +51,19 @@ export const EquipmentTable = ({
 }) => {
   const styles = useStyles();
 
-  const [sortDirection, setSortDirection] = useState('ascending');
+  const [sortDirection, setSortDirection] = useState(sortDirections.ascending);
   const [sortedColumn, setSortedColumn] = useState(sortableColumns[0]);
 
   const onClickTableHeaderCell = useCallback((columnKey) => {
     if (columnKey !== sortedColumn) {
       setSortedColumn(columnKey);
-      setSortDirection('ascending');
+      setSortDirection(sortDirections.ascending);
       onChangeSort({
         columnKey,
-        sortDirection: 'ascending',
+        sortDirection: sortDirections.ascending,
       });
     } else {
-      const newSortDirection = sortDirection === 'ascending' ? 'descending' : 'ascending';
+      const newSortDirection = sortDirection === sortDirections.ascending ? sortDirections.descending : sortDirections.ascending;
       setSortDirection(newSortDirection);
       onChangeSort({
         columnKey,

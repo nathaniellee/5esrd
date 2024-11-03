@@ -16,6 +16,7 @@ import {
   areas,
   attackTypes,
   attackTypesMapping,
+  sortDirections,
   spellLevels,
 } from '../constants';
 import { Paginator } from '../common/paginator';
@@ -102,19 +103,19 @@ export const SpellsTable = ({
   const styles = useStyles();
   const isPaginationControlsDisabled = useContext(SpellsLoadingContext);
 
-  const [sortDirection, setSortDirection] = useState('ascending');
+  const [sortDirection, setSortDirection] = useState(sortDirections.ascending);
   const [sortedColumn, setSortedColumn] = useState(sortableColumns[0]);
 
   const onClickTableHeaderCell = useCallback((columnKey) => {
     if (columnKey !== sortedColumn) {
       setSortedColumn(columnKey);
-      setSortDirection('ascending');
+      setSortDirection(sortDirections.ascending);
       onChangeSort({
         columnKey,
-        sortDirection: 'ascending',
+        sortDirection: sortDirections.ascending,
       });
     } else {
-      const newSortDirection = sortDirection === 'ascending' ? 'descending' : 'ascending';
+      const newSortDirection = sortDirection === sortDirections.ascending ? sortDirections.descending : sortDirections.ascending;
       setSortDirection(newSortDirection);
       onChangeSort({
         columnKey,

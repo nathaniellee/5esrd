@@ -1,3 +1,8 @@
+export const sortDirections = {
+  ascending: 'ascending',
+  descending: 'descending',
+};
+
 const areasMapping = {
   cone: {
     enum: 'CONE',
