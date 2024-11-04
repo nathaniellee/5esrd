@@ -7,6 +7,7 @@ import {
 } from '@fluentui/react-components';
 import { Description } from '../common/description';
 import { Field } from '../common/field';
+import { FieldLabel } from '../common/field-label';
 import { AreaOfEffect } from './area-of-effect';
 import { Components } from './components';
 import { areas } from '../constants';
@@ -14,9 +15,6 @@ import { Duration } from './duration';
 import { HigherLevel } from './higher-level';
 
 const useStyles = makeStyles({
-  label: {
-    marginRight: tokens.spacingHorizontalSNudge,
-  },
   subheader: {
     marginBottom: tokens.spacingVerticalM,
   },
@@ -49,21 +47,19 @@ export const SpellInfo = ({
       <Field label="Range" value={range} />
       {areaOfEffect && (
         <div>
-          <Text className={styles.label} weight="bold">Area of Effect:</Text>
+          <FieldLabel label="Area of Effect" />
           <AreaOfEffect {...areaOfEffect} />
         </div>
       )}
       <div>
-        <Text className={styles.label} weight="bold">Components:</Text>
-        <Text>
-          <Components
-            components={components}
-            material={material}
-          />
-        </Text>
+        <FieldLabel label="Components" />
+        <Components
+          components={components}
+          material={material}
+        />
       </div>
       <div>
-        <Text className={styles.label} weight="bold">Duration:</Text>
+        <FieldLabel label="Duration" />
         <Duration
           duration={duration}
           requiresConcentration={requiresConcentration}

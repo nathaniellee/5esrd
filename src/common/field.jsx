@@ -1,26 +1,14 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {
-  Text,
-  makeStyles,
-  tokens,
-} from '@fluentui/react-components';
+import { Text } from '@fluentui/react-components';
+import { FieldLabel } from './field-label';
 
-const useStyles = makeStyles({
-  label: {
-    marginRight: tokens.spacingHorizontalSNudge,
-  },
-});
-
-export const Field = ({ label, value }) => {
-  const styles = useStyles();
-  return (
-    <div>
-      <Text className={styles.label} weight="bold">{`${label}:`}</Text>
-      <Text>{value}</Text>
-    </div>
-  );
-};
+export const Field = ({ label, value }) => (
+  <div>
+    <FieldLabel label={label} />
+    <Text>{value}</Text>
+  </div>
+);
 
 Field.propTypes = {
   label: PropTypes.string.isRequired,
