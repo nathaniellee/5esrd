@@ -7,7 +7,6 @@ import {
   TableHeader,
   TableHeaderCell,
   TableRow,
-  Title1,
   Tooltip,
   makeStyles,
   tokens,
@@ -126,7 +125,6 @@ export const SpellsTable = ({
 
   return (
     <div>
-      <Title1>Spells</Title1>
       <Table sortable>
         <TableHeader>
           <TableRow>

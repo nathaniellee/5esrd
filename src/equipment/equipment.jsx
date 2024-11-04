@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { Title1 } from '@fluentui/react-components';
 import {
   DEFAULT_ORDER,
   DEFAULT_PAGE_NUMBER,
@@ -94,6 +95,7 @@ export const Equipment = () => {
 
   return (
     <div className="Equipment">
+      <Title1>Equipment</Title1>
       <EquipmentTable
         equipments={equipments}
         onChangeSort={onChangeSort}

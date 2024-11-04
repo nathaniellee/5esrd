@@ -7,7 +7,6 @@ import {
   TableHeader,
   TableHeaderCell,
   TableRow,
-  Title1,
   makeStyles,
   tokens,
 } from '@fluentui/react-components';
@@ -75,7 +74,6 @@ export const EquipmentTable = ({
 
   return (
     <div>
-      <Title1>Equipment</Title1>
       <Table>
         <TableHeader>
           <TableRow>

@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { Title1 } from '@fluentui/react-components';
 import {
   DEFAULT_ORDER,
   DEFAULT_PAGE_NUMBER,
@@ -99,6 +100,7 @@ export const Spells = () => {
 
   return (
     <div className="Spells">
+      <Title1>Spells</Title1>
       <SpellsLoadingContext.Provider value={isLoading}>
         <SpellsTable
           onChangeSort={onChangeSort}
