@@ -14,35 +14,6 @@ const generateEquipmentQuery = gql`
         index
       }
       weight
-      ... on Tool {
-        tool_category {
-          index
-        }
-      }
-      ... on Gear {
-        gear_category {
-          index
-        }
-      }
-      ... on Pack {
-        contents {
-          item {
-            index
-          }
-          quantity
-        }
-        gear_category {
-          index
-        }
-      }
-      ... on Weapon {
-        damage {
-          damage_dice
-          damage_type {
-            index
-          }
-        }
-      }
       ... on Ammunition {
         gear_category {
           index
@@ -61,6 +32,27 @@ const generateEquipmentQuery = gql`
         stealth_disadvantage
         str_minimum
       }
+      ... on Gear {
+        gear_category {
+          index
+        }
+      }
+      ... on Pack {
+        contents {
+          item {
+            index
+          }
+          quantity
+        }
+        gear_category {
+          index
+        }
+      }
+      ... on Tool {
+        tool_category {
+          index
+        }
+      }
       ... on Vehicle {
         capacity
         speed {
@@ -69,6 +61,14 @@ const generateEquipmentQuery = gql`
         }
         vehicle_category {
           index
+        }
+      }
+      ... on Weapon {
+        damage {
+          damage_dice
+          damage_type {
+            index
+          }
         }
       }
     }
@@ -118,7 +118,7 @@ export const transformEquipment = equipment => ({
       unit: equipment.speed.unit,
     }
     : null,
-  stealthDisadvantage: equipment.steal_disadvantage,
+  stealthDisadvantage: equipment.stealth_disadvantage,
   strengthMinimum: equipment.str_minimum,
   toolCategory: equipment?.tool_category?.index ?? null,
   vehicleCategory: equipment?.vehicle_category?.index ?? null,
