@@ -6,6 +6,7 @@ import {
   tokens,
 } from '@fluentui/react-components';
 import { Description } from '../common/description';
+import { Field } from '../common/field';
 import { AreaOfEffect } from './area-of-effect';
 import { Components } from './components';
 import { areas } from '../constants';
@@ -44,14 +45,8 @@ export const SpellInfo = ({
       <div className={styles.subheader}>
         <Text italic>{subheader}</Text>
       </div>
-      <div>
-        <Text className={styles.label} weight="bold">Casting Time:</Text>
-        <Text>{castingTime}</Text>
-      </div>
-      <div>
-        <Text className={styles.label} weight="bold">Range:</Text>
-        <Text>{range}</Text>
-      </div>
+      <Field label="Casting Time" value={castingTime} />
+      <Field label="Range" value={range} />
       {areaOfEffect && (
         <div>
           <Text className={styles.label} weight="bold">Area of Effect:</Text>
