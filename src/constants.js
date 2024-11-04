@@ -62,9 +62,9 @@ export const spellLevels = [
 export const equipmentCategories = {
   'adventuring-gear': 'Adventuring Gear',
   armor: 'Armor',
-  'mounts-and-vehicles': 'Mounts and Vehicles',
-  tools: 'Tools',
-  weapon: 'Weapons',
+  'mounts-and-vehicles': 'Mount/Vehicle',
+  tools: 'Tool',
+  weapon: 'Weapon',
 };
 
 export const currencies = {
@@ -79,4 +79,11 @@ export const armorCategories = {
   'heavy-armor': 'Heavy Armor',
   'light-armor': 'Light Armor',
   'medium-armor': 'Medium Armor',
+};
+
+export const toolCategories = {
+  'artisans-tools': "Artisan's Tool",
+  'gaming-sets': 'Gaming Set',
+  'musical-instruments': 'Musical Instrument',
+  'other-tools': 'Tool',
 };
