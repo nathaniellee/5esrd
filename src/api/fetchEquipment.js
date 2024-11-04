@@ -17,26 +17,22 @@ const generateEquipmentQuery = gql`
       ... on Tool {
         tool_category {
           index
-          name
         }
       }
       ... on Gear {
         gear_category {
           index
-          name
         }
       }
       ... on Pack {
         contents {
           item {
             index
-            name
           }
           quantity
         }
         gear_category {
           index
-          name
         }
       }
       ... on Weapon {
@@ -44,21 +40,18 @@ const generateEquipmentQuery = gql`
           damage_dice
           damage_type {
             index
-            name
           }
         }
       }
       ... on Ammunition {
         gear_category {
           index
-          name
         }
         quantity
       }
       ... on Armor {
         armor_category {
           index
-          name
         }
         armor_class {
           base
@@ -76,7 +69,6 @@ const generateEquipmentQuery = gql`
         }
         vehicle_category {
           index
-          name
         }
       }
     }
@@ -95,13 +87,40 @@ export const fetchEquipment = async (key) => {
 };
 
 export const transformEquipment = equipment => ({
+  armorCategory: equipment?.armor_category?.index ?? null,
+  armorClass: equipment.armor_class
+    ? {
+      base: equipment.armor_class.base,
+      dexBonus: equipment.armor_class.dex_bonus,
+      maxBonus: equipment.armor_class.max_bonus,
+    }
+    : null,
+  capacity: equipment.capacity,
   cost: {
     quantity: equipment.cost.quantity,
     unit: equipment.cost.unit,
   },
+  damage: equipment.damage
+    ? {
+      damageDice: equipment.damage.damage_dice,
+      damageType: equipment.damage.damage_type.index,
+    }
+    : null,
   description: equipment.desc ? [...equipment.desc] : [],
   equipmentCategory: equipment.equipment_category.index,
+  gearCategory: equipment?.gear_category?.index ?? null,
   id: equipment.index,
   name: equipment.name,
+  quantity: equipment.quantity,
+  speed: equipment.speed
+    ? {
+      quantity: equipment.speed.quantity,
+      unit: equipment.speed.unit,
+    }
+    : null,
+  stealthDisadvantage: equipment.steal_disadvantage,
+  strengthMinimum: equipment.str_minimum,
+  toolCategory: equipment?.tool_category?.index ?? null,
+  vehicleCategory: equipment?.vehicle_category?.index ?? null,
   weight: equipment.weight,
 });
