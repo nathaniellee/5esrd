@@ -74,3 +74,9 @@ export const currencies = {
   PP: 'pp',
   SP: 'sp',
 };
+
+export const armorCategories = {
+  'heavy-armor': 'Heavy Armor',
+  'light-armor': 'Light Armor',
+  'medium-armor': 'Medium Armor',
+};
