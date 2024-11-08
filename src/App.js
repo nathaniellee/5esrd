@@ -13,6 +13,7 @@ import {
 } from '@fluentui/react-components';
 import './App.css';
 import { Equipment } from './equipment/equipment';
+import { Monsters } from './monsters/monsters';
 import { Spells } from './spells/spells';
 
 const useStyles = makeStyles({
@@ -64,12 +65,15 @@ const App = () => {
           <nav className={styles.navigation}>
             <Link className={styles.headerLink} to="/">Spells</Link>
             <Divider className={styles.divider} vertical />
+            <Link className={styles.headerLink} to="/monsters">Monsters</Link>
+            <Divider className={styles.divider} vertical />
             <Link className={styles.headerLink} to="/equipment">Equipment</Link>
           </nav>
         </header>
         <div className="App-main">
           <Routes>
             <Route path="/" element={<Spells />} />
+            <Route path="/monsters" element={<Monsters />} />
             <Route path="/equipment" element={<Equipment />} />
           </Routes>
         </div>
