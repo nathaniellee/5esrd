@@ -12,6 +12,7 @@ import {
 const generalMonstersQuery = gql`
   query Monsters($limit: Int, $order: MonsterOrder, $skip: Int) {
     monsters(limit: $limit, order: $order, skip: $skip) {
+      index
       name
       type
       subtype
@@ -35,6 +36,17 @@ const generalMonstersQuery = gql`
     }
   }
 `;
+
+export const transformMonster = monster => ({
+  armorClass: monster.armor_class[0].value,
+  challengeRating: monster.challenge_rating,
+  hitDice: monster.hit_dice,
+  id: monster.index,
+  name: monster.name,
+  size: monster.size,
+  subtype: monster.subtype,
+  type: monster.type,
+});
 
 export const fetchMonsters = async (options = {}) => {
   const {
