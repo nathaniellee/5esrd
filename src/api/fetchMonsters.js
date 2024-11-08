@@ -12,27 +12,17 @@ import {
 const generalMonstersQuery = gql`
   query Monsters($limit: Int, $order: MonsterOrder, $skip: Int) {
     monsters(limit: $limit, order: $order, skip: $skip) {
-      index
-      name
-      type
-      subtype
-      size
-      damage_immunities
-      damage_resistances
-      damage_vulnerabilities
       armor_class {
         value
       }
       challenge_rating
-      strength
-      dexterity
-      constitution
-      intelligence
-      wisdom
-      charisma
-      hit_dice
       hit_points
       hit_points_roll
+      index
+      name
+      size
+      subtype
+      type
     }
   }
 `;
@@ -40,7 +30,8 @@ const generalMonstersQuery = gql`
 export const transformMonster = monster => ({
   armorClass: monster.armor_class[0].value,
   challengeRating: monster.challenge_rating,
-  hitDice: monster.hit_dice,
+  hitPoints: monster.hit_points,
+  hitPointsFormula: monster.hit_points_roll,
   id: monster.index,
   name: monster.name,
   size: monster.size,

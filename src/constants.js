@@ -59,6 +59,33 @@ export const spellLevels = [
   '9th',
 ];
 
+export const creatureSizes = {
+  GARGANTUAN: 'Gargantuan',
+  HUGE: 'Huge',
+  LARGE: 'Large',
+  MEDIUM: 'Medium',
+  SMALL: 'Small',
+  TINY: 'Tiny',
+};
+
+export const creatureTypes = {
+  ABERRATION: 'Aberration',
+  BEAST: 'Beast',
+  CELESTIAL: 'Celestial',
+  CONSTRUCT: 'Construct',
+  DRAGON: 'Dragon',
+  ELEMENTAL: 'Elemental',
+  FEY: 'Fey',
+  FIEND: 'Fiend',
+  GIANT: 'Giant',
+  HUMANOID: 'Humanoid',
+  MONSTROSITY: 'Monstrosity',
+  OOZE: 'Ooze',
+  PLANT: 'Plant',
+  SWARM: 'Swarm',
+  UNDEAD: 'Undead',
+};
+
 export const equipmentCategories = {
   'adventuring-gear': 'Adventuring Gear',
   armor: 'Armor',
