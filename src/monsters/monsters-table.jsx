@@ -16,6 +16,10 @@ import {
   creatureTypes,
   sortDirections,
 } from '../constants';
+import {
+  getChallengeRating,
+  getHitPointsString,
+} from './utils';
 
 const useStyles = makeStyles({
   th: {
@@ -39,21 +43,6 @@ const sortableColumns = [
   'size',
 ];
 const isSortableColumn = columnKey => sortableColumns.includes(columnKey);
-
-const getChallengeRating = (challengeRating) => {
-  if (challengeRating === 0.125) {
-    return '1/8';
-  }
-  if (challengeRating === 0.25) {
-    return '1/4';
-  }
-  if (challengeRating === 0.5) {
-    return '1/2';
-  }
-  return challengeRating;
-};
-
-const getHitPointsString = ({ hitPoints, hitPointsFormula }) => `${hitPoints} (${hitPointsFormula})`;
 
 export const MonstersTable = ({
   monsters,
