@@ -15,8 +15,13 @@ import {
   getHitPointsString,
   getSpeedString,
 } from './utils';
+import { AbilityScores } from './ability-scores';
 
 const useStyles = makeStyles({
+  sectionSpacing: {
+    marginBottom: tokens.spacingVerticalM,
+    marginTop: tokens.spacingVerticalM,
+  },
   subheader: {
     marginBottom: tokens.spacingVerticalM,
   },
@@ -25,11 +30,19 @@ const useStyles = makeStyles({
 export const MonsterInfo = ({
   armorClass,
   challengeRating,
+  charisma,
+  constitution,
+  dexterity,
   hitPoints,
   hitPointsFormula,
+  intelligence,
+  proficiencies,
+  proficiencyBonus,
   size,
   speed,
+  strength,
   type,
+  wisdom,
   xp,
 }) => {
   const styles = useStyles();
@@ -40,13 +53,25 @@ export const MonsterInfo = ({
       <div className={styles.subheader}>
         <Text italic>{subheader}</Text>
       </div>
-      <Field label="AC" value={armorClass} />
+      <Field label="AC" value={`${armorClass}`} />
       <Field label="HP" value={getHitPointsString({
         hitPoints,
         hitPointsFormula,
       })} />
-      <Field label="CR" value={getCRString({ challengeRating, xp })} />
       <Field label="Speed" value={getSpeedString(speed)} />
+      <div className={styles.sectionSpacing}>
+        <AbilityScores
+          charisma={charisma}
+          constitution={constitution}
+          dexterity={dexterity}
+          intelligence={intelligence}
+          proficiencyBonus={proficiencyBonus}
+          savingThrowProficiencies={proficiencies.savingThrows}
+          strength={strength}
+          wisdom={wisdom}
+        />
+      </div>
+      <Field label="CR" value={getCRString({ challengeRating, xp })} />
     </>
   );
 };
@@ -54,8 +79,17 @@ export const MonsterInfo = ({
 MonsterInfo.propTypes = {
   armorClass: PropTypes.number.isRequired,
   challengeRating: PropTypes.number.isRequired,
+  charisma: PropTypes.number.isRequired,
+  constitution: PropTypes.number.isRequired,
+  dexterity: PropTypes.number.isRequired,
   hitPoints: PropTypes.number.isRequired,
   hitPointsFormula: PropTypes.string.isRequired,
+  intelligence: PropTypes.number.isRequired,
+  proficiencies: PropTypes.shape({
+    savingThrows: PropTypes.arrayOf(PropTypes.string).isRequired,
+    skills: PropTypes.arrayOf(PropTypes.string).isRequired,
+  }).isRequired,
+  proficiencyBonus: PropTypes.number.isRequired,
   size: PropTypes.oneOf(Object.keys(creatureSizes)).isRequired,
   speed: PropTypes.shape({
     burrow: PropTypes.string,
@@ -65,6 +99,8 @@ MonsterInfo.propTypes = {
     swim: PropTypes.string,
     walk: PropTypes.string.isRequired,
   }).isRequired,
+  strength: PropTypes.number.isRequired,
   type: PropTypes.oneOf(Object.keys(creatureTypes)).isRequired,
+  wisdom: PropTypes.number.isRequired,
   xp: PropTypes.number.isRequired,
 };

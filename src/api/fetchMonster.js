@@ -31,6 +31,7 @@ const generateMonsterQuery = gql`
         proficiency {
           index
           name
+          type
         }
         value
       }
@@ -60,6 +61,18 @@ const generateMonsterQuery = gql`
   }
 `;
 
+const transformProficiencies = proficiencies => proficiencies.reduce((acc, { proficiency }) => {
+  const value = proficiency.name.split(': ')[1];
+
+  if (proficiency.type === 'SKILLS') {
+    acc.skills.push(value);
+  } else {
+    acc.savingThrows.push(value);
+  }
+
+  return acc;
+}, { savingThrows: [], skills: [] });
+
 export const transformMonster = (monster) => {
   return {
     alignment: monster.alignment,
@@ -73,6 +86,7 @@ export const transformMonster = (monster) => {
     id: monster.index,
     intelligence: monster.intelligence,
     name: monster.name,
+    proficiencies: transformProficiencies(monster.proficiencies),
     proficiencyBonus: monster.proficiency_bonus,
     size: monster.size,
     speed: {

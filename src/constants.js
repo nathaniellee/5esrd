@@ -86,6 +86,15 @@ export const creatureTypes = {
   UNDEAD: 'Undead',
 };
 
+export const abilityScores = {
+  charisma: 'CHA',
+  constitution: 'CON',
+  dexterity: 'DEX',
+  intelligence: 'INT',
+  strength: 'STR',
+  wisdom: 'WIS',
+};
+
 export const equipmentCategories = {
   'adventuring-gear': 'Adventuring Gear',
   armor: 'Armor',
