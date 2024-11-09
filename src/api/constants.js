@@ -14,9 +14,13 @@ export const SORT_DIRECTION = {
 };
 
 export const SORT_FIELDS = {
+  armorClass: 'ARMOR_CLASS',
+  challengeRating: 'CHALLENGE_RATING',
   equipmentCategory: 'EQUIPMENT_CATEGORY',
   level: 'LEVEL',
   name: 'NAME',
   school: 'SCHOOL',
+  size: 'SIZE',
+  type: 'TYPE',
   weight: 'WEIGHT',
 };

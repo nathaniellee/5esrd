@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   Table,
   TableBody,
@@ -14,6 +14,7 @@ import { Paginator } from '../common/paginator';
 import {
   creatureSizes,
   creatureTypes,
+  sortDirections,
 } from '../constants';
 
 const useStyles = makeStyles({
@@ -30,18 +31,62 @@ const columns = [
   { columnKey: 'type', label: 'Type' },
   { columnKey: 'size', label: 'Size' },
 ];
+const sortableColumns = [
+  'name',
+  'challengeRating',
+  'armorClass',
+  'type',
+  'size',
+];
+const isSortableColumn = columnKey => sortableColumns.includes(columnKey);
 
-export const getHitPointsString = ({ hitPoints, hitPointsFormula }) => `${hitPoints} (${hitPointsFormula})`;
+const getChallengeRating = (challengeRating) => {
+  if (challengeRating === 0.125) {
+    return '1/8';
+  }
+  if (challengeRating === 0.25) {
+    return '1/4';
+  }
+  if (challengeRating === 0.5) {
+    return '1/2';
+  }
+  return challengeRating;
+};
+
+const getHitPointsString = ({ hitPoints, hitPointsFormula }) => `${hitPoints} (${hitPointsFormula})`;
 
 export const MonstersTable = ({
   monsters,
+  onChangeSort,
   onNextPage,
   onPrevPage,
+  onSelectMonster,
   pageNumber,
   perPage,
   totalMonsterCount = 0,
 }) => {
   const styles = useStyles();
+
+  const [sortDirection, setSortDirection] = useState(sortDirections.ascending);
+  const [sortedColumn, setSortedColumn] = useState(sortableColumns[0]);
+
+  const onClickTableHeaderCell = useCallback((columnKey) => {
+    if (columnKey !== sortedColumn) {
+      setSortedColumn(columnKey);
+      setSortDirection(sortDirections.ascending);
+      onChangeSort({
+        columnKey,
+        sortDirection: sortDirections.ascending,
+      });
+    } else {
+      const newSortDirection = sortDirection === sortDirections.ascending ? sortDirections.descending : sortDirections.ascending;
+      setSortDirection(newSortDirection);
+      onChangeSort({
+        columnKey,
+        sortDirection: newSortDirection,
+      })
+    }
+  }, [sortDirection, sortedColumn]);
 
   return (
     <div>
@@ -52,6 +97,13 @@ export const MonstersTable = ({
               <TableHeaderCell
                 key={columnKey}
                 className={styles.th}
+                onClick={() => {
+                  if (isSortableColumn(columnKey)) {
+                    onClickTableHeaderCell(columnKey);
+                  }
+                }}
+                sortDirection={sortedColumn === columnKey ? sortDirection : undefined}
+                sortable={isSortableColumn(columnKey)}
               >
                 {label}
               </TableHeaderCell>
@@ -62,9 +114,10 @@ export const MonstersTable = ({
           {monsters.map(monster => (
             <TableRow
               key={monster.id}
+              onClick={() => { onSelectMonster(monster.id) }}
             >
               <TableCell>{monster.name}</TableCell>
-              <TableCell>{monster.challengeRating}</TableCell>
+              <TableCell>{getChallengeRating(monster.challengeRating)}</TableCell>
               <TableCell>{monster.armorClass}</TableCell>
               <TableCell>
                 {getHitPointsString({
@@ -100,8 +153,10 @@ MonstersTable.propTypes = {
     size: PropTypes.oneOf(Object.keys(creatureSizes)).isRequired,
     type: PropTypes.oneOf(Object.keys(creatureTypes)).isRequired,
   })),
+  onChangeSort: PropTypes.func.isRequired,
   onNextPage: PropTypes.func.isRequired,
   onPrevPage: PropTypes.func.isRequired,
+  onSelectMonster: PropTypes.func.isRequired,
   pageNumber: PropTypes.number.isRequired,
   perPage: PropTypes.number.isRequired,
   totalMonsterCount: PropTypes.number,
