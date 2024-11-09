@@ -62,15 +62,24 @@ const generateMonsterQuery = gql`
 
 export const transformMonster = (monster) => {
   return {
+    alignment: monster.alignment,
     armorClass: monster.armor_class[0].value,
     challengeRating: monster.challenge_rating,
+    charisma: monster.charisma,
+    constitution: monster.constitution,
+    dexterity: monster.dexterity,
     hitPoints: monster.hit_points,
     hitPointsFormula: monster.hit_points_roll,
     id: monster.index,
+    intelligence: monster.intelligence,
     name: monster.name,
+    proficiencyBonus: monster.proficiency_bonus,
     size: monster.size,
+    strength: monster.strength,
     subtype: monster.subtype,
     type: monster.type,
+    wisdom: monster.wisdom,
+    xp: monster.xp,
   };
 };
 
