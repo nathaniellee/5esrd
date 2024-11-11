@@ -12,6 +12,7 @@ import {
 } from '../constants';
 import {
   getCRString,
+  getDamageAdjustmentString,
   getHitPointsString,
   getSpeedString,
 } from './utils';
@@ -32,6 +33,9 @@ export const MonsterInfo = ({
   challengeRating,
   charisma,
   constitution,
+  damageImmunities,
+  damageResistances,
+  damageVulnerabilities,
   dexterity,
   hitPoints,
   hitPointsFormula,
@@ -71,6 +75,15 @@ export const MonsterInfo = ({
           wisdom={wisdom}
         />
       </div>
+      {damageVulnerabilities.length > 0 && (
+        <Field label="Vulnerabilities" value={getDamageAdjustmentString(damageVulnerabilities)} />
+      )}
+      {damageResistances.length > 0 && (
+        <Field label="Resistances" value={getDamageAdjustmentString(damageResistances)} />
+      )}
+      {damageImmunities.length > 0 && (
+        <Field label="Immunities" value={getDamageAdjustmentString(damageImmunities)} />
+      )}
       <Field label="CR" value={getCRString({ challengeRating, xp })} />
     </>
   );
@@ -81,6 +94,9 @@ MonsterInfo.propTypes = {
   challengeRating: PropTypes.number.isRequired,
   charisma: PropTypes.number.isRequired,
   constitution: PropTypes.number.isRequired,
+  damageImmunities: PropTypes.arrayOf(PropTypes.string).isRequired,
+  damageResistances: PropTypes.arrayOf(PropTypes.string).isRequired,
+  damageVulnerabilities: PropTypes.arrayOf(PropTypes.string).isRequired,
   dexterity: PropTypes.number.isRequired,
   hitPoints: PropTypes.number.isRequired,
   hitPointsFormula: PropTypes.string.isRequired,

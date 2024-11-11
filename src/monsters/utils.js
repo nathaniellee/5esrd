@@ -1,3 +1,5 @@
+import { damageTypes } from "../constants";
+
 export const getChallengeRating = (challengeRating) => {
   if (challengeRating === 0.125) {
     return '1/8';
@@ -14,6 +16,20 @@ export const getChallengeRating = (challengeRating) => {
 export const getCRString = ({ challengeRating, xp }) => {
   const cr = getChallengeRating(challengeRating);
   return `${cr} (${xp} XP)`;
+};
+
+export const getDamageAdjustmentString = (adjustments) => {
+  const formattedAdjustments = adjustments.map((adjustment) => {
+    if (!adjustment.includes(' ')) {
+      return damageTypes[adjustment];
+    }
+
+    let formattedAdjustment = adjustment;
+
+    Object.entries(damageTypes).forEach(([key, value]) => formattedAdjustment = formattedAdjustment.replace(key, value));
+    return formattedAdjustment;
+  });
+  return formattedAdjustments.join('; ');
 };
 
 export const getHitPointsString = ({ hitPoints, hitPointsFormula }) => `${hitPoints} (${hitPointsFormula})`;

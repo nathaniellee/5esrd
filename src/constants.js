@@ -46,6 +46,22 @@ export const attackTypesMapping = {
   RANGED: 'Ranged',
 };
 
+export const damageTypes = {
+  acid: 'Acid',
+  bludgeoning: 'Bludgeoning',
+  cold: 'Cold',
+  fire: 'Fire',
+  force: 'Force',
+  lightning: 'Lightning',
+  necrotic: 'Necrotic',
+  piercing: 'Piercing',
+  poison: 'Poison',
+  psychic: 'Psychic',
+  radiant: 'Radiant',
+  slashing: 'Slashing',
+  thunder: 'Thunder',
+};
+
 export const spellLevels = [
   'Cantrip',
   '1st',
