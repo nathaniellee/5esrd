@@ -88,6 +88,7 @@ export const transformMonster = (monster) => {
     hitPointsFormula: monster.hit_points_roll,
     id: monster.index,
     intelligence: monster.intelligence,
+    languages: monster.languages,
     name: monster.name,
     proficiencies: transformProficiencies(monster.proficiencies),
     proficiencyBonus: monster.proficiency_bonus,

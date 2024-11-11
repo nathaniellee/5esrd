@@ -40,6 +40,7 @@ export const MonsterInfo = ({
   hitPoints,
   hitPointsFormula,
   intelligence,
+  languages,
   proficiencies,
   proficiencyBonus,
   size,
@@ -84,6 +85,7 @@ export const MonsterInfo = ({
       {damageImmunities.length > 0 && (
         <Field label="Immunities" value={getDamageAdjustmentString(damageImmunities)} />
       )}
+      <Field label="Languages" value={languages ? languages : 'None'} />
       <Field label="CR" value={getCRString({ challengeRating, xp })} />
     </>
   );
@@ -101,6 +103,7 @@ MonsterInfo.propTypes = {
   hitPoints: PropTypes.number.isRequired,
   hitPointsFormula: PropTypes.string.isRequired,
   intelligence: PropTypes.number.isRequired,
+  languages: PropTypes.string.isRequired,
   proficiencies: PropTypes.shape({
     savingThrows: PropTypes.arrayOf(PropTypes.string).isRequired,
     skills: PropTypes.arrayOf(PropTypes.string).isRequired,
