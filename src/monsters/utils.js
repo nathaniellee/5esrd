@@ -13,9 +13,9 @@ export const getChallengeRating = (challengeRating) => {
   return challengeRating;
 };
 
-export const getCRString = ({ challengeRating, xp }) => {
+export const getCRString = ({ challengeRating, proficiencyBonus, xp }) => {
   const cr = getChallengeRating(challengeRating);
-  return `${cr} (${xp} XP)`;
+  return `${cr} (XP ${xp}; PB ${proficiencyBonus})`;
 };
 
 export const getDamageAdjustmentString = (adjustments) => {

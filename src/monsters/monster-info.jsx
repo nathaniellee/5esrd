@@ -86,7 +86,7 @@ export const MonsterInfo = ({
         <Field label="Immunities" value={getDamageAdjustmentString(damageImmunities)} />
       )}
       <Field label="Languages" value={languages ? languages : 'None'} />
-      <Field label="CR" value={getCRString({ challengeRating, xp })} />
+      <Field label="CR" value={getCRString({ challengeRating, proficiencyBonus, xp })} />
     </>
   );
 };
