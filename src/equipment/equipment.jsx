@@ -27,6 +27,10 @@ export const Equipment = () => {
 
   const perPage = DEFAULT_PER_PAGE;
 
+  const onDoneFetchEquipments = useCallback((equipments) => {
+    setEquipments(equipments.map(transformEquipment));
+  }, []);
+
   const onChangeSort = useCallback(({ columnKey, sortDirection }) => {
     const newOrder = [{
       by: columnKey,
@@ -46,11 +50,7 @@ export const Equipment = () => {
       pageNumber: DEFAULT_PAGE_NUMBER,
       perPage,
     }).then(onDoneFetchEquipments);
-  });
-
-  const onDoneFetchEquipments = useCallback((equipments) => {
-    setEquipments(equipments.map(transformEquipment));
-  }, []);
+  }, [onDoneFetchEquipments, perPage]);
 
   const onNextPage = useCallback(() => {
     const newPageNumber = pageNumber + 1;
@@ -60,7 +60,7 @@ export const Equipment = () => {
       pageNumber: newPageNumber,
       perPage,
     }).then(onDoneFetchEquipments);
-  }, [order, pageNumber, perPage]);
+  }, [onDoneFetchEquipments, order, pageNumber, perPage]);
 
   const onPrevPage = useCallback(() => {
     const newPageNumber = pageNumber - 1;
@@ -70,7 +70,7 @@ export const Equipment = () => {
       pageNumber: newPageNumber,
       perPage,
     }).then(onDoneFetchEquipments);
-  }, [order, pageNumber, perPage]);
+  }, [onDoneFetchEquipments, order, pageNumber, perPage]);
 
   const onSelectEquipment = useCallback((id) => {
     fetchEquipment(id).then((equipment) => {
@@ -91,7 +91,7 @@ export const Equipment = () => {
         perPage,
       }).then(onDoneFetchEquipments);
     });
-  }, []);
+  }, [onDoneFetchEquipments, perPage]);
 
   return (
     <div className="Equipment">

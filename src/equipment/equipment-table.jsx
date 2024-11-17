@@ -70,7 +70,7 @@ export const EquipmentTable = ({
         sortDirection: newSortDirection,
       })
     }
-  }, [sortDirection, sortedColumn]);
+  }, [onChangeSort, sortDirection, sortedColumn]);
 
   return (
     <div>

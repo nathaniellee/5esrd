@@ -20,7 +20,8 @@ export const EquipmentDialog = ({
     if (!data.open) {
       onClose();
     }
-  }, []);
+  }, [onClose]);
+
   return (
     <Dialog open={isOpen} onOpenChange={onChangeIsOpen}>
       <DialogSurface>
