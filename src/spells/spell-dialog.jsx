@@ -20,7 +20,7 @@ export const SpellDialog = ({
     if (!data.open) {
       onClose();
     }
-  }, []);
+  }, [onClose]);
   return (
     <Dialog open={isOpen} onOpenChange={onChangeIsOpen}>
       <DialogSurface>

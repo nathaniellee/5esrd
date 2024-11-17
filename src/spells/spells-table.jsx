@@ -121,7 +121,7 @@ export const SpellsTable = ({
         sortDirection: newSortDirection,
       })
     }
-  }, [sortDirection, sortedColumn]);
+  }, [onChangeSort, sortDirection, sortedColumn]);
 
   return (
     <div>

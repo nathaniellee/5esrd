@@ -29,6 +29,11 @@ export const Spells = () => {
 
   const perPage = DEFAULT_PER_PAGE;
 
+  const onDoneFetchSpells = useCallback((spells) => {
+    setSpells(spells.map(transformSpell));
+    setIsLoading(false);
+  }, []);
+
   const onChangeSort = useCallback(({ columnKey, sortDirection }) => {
     const newOrder = [{
       by: columnKey,
@@ -48,12 +53,7 @@ export const Spells = () => {
       pageNumber: DEFAULT_PAGE_NUMBER,
       perPage,
     }).then(onDoneFetchSpells);
-  });
-
-  const onDoneFetchSpells = useCallback((spells) => {
-    setSpells(spells.map(transformSpell));
-    setIsLoading(false);
-  }, []);
+  }, [onDoneFetchSpells, perPage]);
 
   const onNextPage = useCallback(() => {
     const newPageNumber = pageNumber + 1;
@@ -64,7 +64,7 @@ export const Spells = () => {
       pageNumber: newPageNumber,
       perPage,
     }).then(onDoneFetchSpells);
-  }, [order, pageNumber, perPage]);
+  }, [onDoneFetchSpells, order, pageNumber, perPage]);
 
   const onPrevPage = useCallback(() => {
     const newPageNumber = pageNumber - 1;
@@ -75,7 +75,7 @@ export const Spells = () => {
       pageNumber: newPageNumber,
       perPage,
     }).then(onDoneFetchSpells);
-  }, [order, pageNumber, perPage]);
+  }, [onDoneFetchSpells, order, pageNumber, perPage]);
 
   const onSelectSpell = useCallback((id) => {
     fetchSpell(id).then((spell) => {
@@ -96,7 +96,7 @@ export const Spells = () => {
         perPage,
       }).then(onDoneFetchSpells);
     });
-  }, []);
+  }, [onDoneFetchSpells, pageNumber, perPage]);
 
   return (
     <div className="Spells">
