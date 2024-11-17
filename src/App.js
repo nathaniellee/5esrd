@@ -12,6 +12,7 @@ import {
   tokens,
 } from '@fluentui/react-components';
 import './App.css';
+import { Classes } from './classes/classes';
 import { Equipment } from './equipment/equipment';
 import { Monsters } from './monsters/monsters';
 import { Spells } from './spells/spells';
@@ -63,6 +64,8 @@ const App = () => {
         <header className={styles.header}>
           <span className={styles.pageTitle}>5eSRD</span>
           <nav className={styles.navigation}>
+            <Link className={styles.headerLink} to="/classes">Classes</Link>
+            <Divider className={styles.divider} vertical />
             <Link className={styles.headerLink} to="/">Spells</Link>
             <Divider className={styles.divider} vertical />
             <Link className={styles.headerLink} to="/monsters">Monsters</Link>
@@ -73,6 +76,7 @@ const App = () => {
         <div className="App-main">
           <Routes>
             <Route path="/" element={<Spells />} />
+            <Route path="/classes" element={<Classes />} />
             <Route path="/monsters" element={<Monsters />} />
             <Route path="/equipment" element={<Equipment />} />
           </Routes>
