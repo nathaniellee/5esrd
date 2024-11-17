@@ -27,6 +27,10 @@ export const Monsters = () => {
 
   const perPage = DEFAULT_PER_PAGE;
 
+  const onDoneFetchMonsters = useCallback((monsters) => {
+    setMonsters(monsters.map(monster => transformMonster(monster)));
+  }, []);
+
   const onChangeSort = useCallback(({ columnKey, sortDirection }) => {
     const newOrder = [{
       by: columnKey,
@@ -46,11 +50,7 @@ export const Monsters = () => {
       pageNumber: DEFAULT_PAGE_NUMBER,
       perPage,
     }).then(onDoneFetchMonsters);
-  });
-
-  const onDoneFetchMonsters = useCallback((monsters) => {
-    setMonsters(monsters.map(monster => transformMonster(monster)));
-  }, []);
+  }, [onDoneFetchMonsters, perPage]);
 
   const onNextPage = useCallback(() => {
     const newPageNumber = pageNumber + 1;
@@ -60,7 +60,7 @@ export const Monsters = () => {
       pageNumber: newPageNumber,
       perPage,
     }).then(onDoneFetchMonsters);
-  }, [order, pageNumber, perPage]);
+  }, [onDoneFetchMonsters, order, pageNumber, perPage]);
 
   const onPrevPage = useCallback(() => {
     const newPageNumber = pageNumber - 1;
@@ -70,7 +70,7 @@ export const Monsters = () => {
       pageNumber: newPageNumber,
       perPage,
     }).then(onDoneFetchMonsters);
-  }, [order, pageNumber, perPage]);
+  }, [onDoneFetchMonsters, order, pageNumber, perPage]);
 
   const onSelectMonster = useCallback((id) => {
     fetchMonster(id).then((monster) => {
@@ -88,7 +88,7 @@ export const Monsters = () => {
       setTotalMonsterCount(count);
       fetchMonsters().then(onDoneFetchMonsters);
     });
-  }, []);
+  }, [onDoneFetchMonsters]);
 
   return (
     <div className="Monsters">

@@ -20,7 +20,8 @@ export const MonsterDialog = ({
     if (!data.open) {
       onClose();
     }
-  }, []);
+  }, [onClose]);
+
   return (
     <Dialog open={isOpen} onOpenChange={onChangeIsOpen}>
       <DialogSurface>

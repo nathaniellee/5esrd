@@ -21,6 +21,7 @@ export const SpellDialog = ({
       onClose();
     }
   }, [onClose]);
+
   return (
     <Dialog open={isOpen} onOpenChange={onChangeIsOpen}>
       <DialogSurface>

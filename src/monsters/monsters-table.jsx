@@ -75,7 +75,7 @@ export const MonstersTable = ({
         sortDirection: newSortDirection,
       })
     }
-  }, [sortDirection, sortedColumn]);
+  }, [onChangeSort, sortDirection, sortedColumn]);
 
   return (
     <div>
