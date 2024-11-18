@@ -1,10 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {
-  Text,
-  makeStyles,
-  tokens,
-} from '@fluentui/react-components';
+import './classes.css';
 import {
   getArmorString,
   getHitDieString,
@@ -12,29 +8,12 @@ import {
   getWeaponsString,
 } from './utils';
 
-const useStyles = makeStyles({
-  trait: {
-    display: 'flex',
-    columnGap: tokens.spacingHorizontalXS,
-  },
-  traitLabel: {
-    whiteSpace: 'nowrap',
-  },
-  traits: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-});
-
-const Trait = ({ label, value }) => {
-  const styles = useStyles();
-  return (
-    <span className={styles.trait}>
-      <Text className={styles.traitLabel} weight='semibold'>{`${label}:`}</Text>
-      <Text>{value}</Text>
-    </span>
-  );
-};
+const Trait = ({ label, value }) => (
+  <tr>
+    <td>{`${label}:`}</td>
+    <td>{value}</td>
+  </tr>
+);
 
 Trait.propTypes = {
   label: PropTypes.string.isRequired,
@@ -47,36 +26,37 @@ export const Traits = ({
   proficiencies,
   savingThrows,
 }) => {
-  const styles = useStyles();
   return (
-    <div className={styles.traits}>
-      <Trait
-        label="Hit Die"
-        value={getHitDieString(hitDie, name)}
-      />
-      <Trait
-        label="Saves"
-        value={getSavingThrowString(savingThrows)}
-      />
-      <Trait
-        label="Skills"
-        value={proficiencies.skills}
-      />
-      {proficiencies.tools.length > 0 && (
+    <table className="TraitsTable">
+      <tbody>
         <Trait
-          label="Tool Proficiencies"
-          value={proficiencies.tools}
+          label="Hit Point Die"
+          value={getHitDieString(hitDie, name)}
         />
-      )}
-      <Trait
-        label="Weapon Training"
-        value={getWeaponsString(proficiencies.weapons)}
-      />
-      <Trait
-        label="Armor Training"
-        value={getArmorString(proficiencies.armor)}
-      />
-    </div>
+        <Trait
+          label="Saving Throws"
+          value={getSavingThrowString(savingThrows)}
+        />
+        <Trait
+          label="Skill Proficiencies"
+          value={proficiencies.skills}
+        />
+        {proficiencies.tools.length > 0 && (
+          <Trait
+            label="Tool Proficiencies"
+            value={proficiencies.tools}
+          />
+        )}
+        <Trait
+          label="Weapon Training"
+          value={getWeaponsString(proficiencies.weapons)}
+        />
+        <Trait
+          label="Armor Training"
+          value={getArmorString(proficiencies.armor)}
+        />
+      </tbody>
+    </table>
   );
 };
 

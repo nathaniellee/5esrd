@@ -1,0 +1,20 @@
+.TraitsTable {
+  border-spacing: 1px;
+}
+
+.TraitsTable tbody tr:nth-child(odd) {
+  background-color: rgb(215,232,238);
+}
+
+.TraitsTable tbody tr:nth-child(even) {
+  background-color: rgb(241,247,249);
+}
+
+.TraitsTable td {
+  padding: 8px 12px;
+}
+
+.TraitsTable td:first-child {
+  font-weight: 600;
+  white-space: nowrap;
+}
