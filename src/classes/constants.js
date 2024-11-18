@@ -29,7 +29,7 @@ export const classMetadata = {
   },
   ranger: {
     tagline: 'A Wandering Warrior Imbued with Primal Magic',
-    summary: 'Rangers are honed with deadly focus and&nbsp;harness primal powers to protect the world from the ravages of monsters and tyrants.'
+    summary: 'Rangers are honed with deadly focus and harness primal powers to protect the world from the ravages of monsters and tyrants.'
   },
   rogue: {
     tagline: 'A Dexterous Expert in Stealth and Subterfuge',
