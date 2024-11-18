@@ -7,19 +7,13 @@ import {
   Text,
   Title1,
   makeStyles,
-  tokens,
 } from '@fluentui/react-components';
 import {
   fetchClasses,
   transformClasses,
 } from '../api/fetchClasses';
 import { classMetadata } from './constants';
-import {
-  getArmorString,
-  getHitDieString,
-  getSavingThrowString,
-  getWeaponsString,
-} from './utils';
+import { Traits } from './traits';
 
 const gapSize = 24;
 
@@ -33,17 +27,6 @@ const useStyles = makeStyles({
     flexWrap: 'wrap',
     marginTop: `${gapSize}px`,
     rowGap: `${gapSize}px`,
-  },
-  trait: {
-    display: 'flex',
-    columnGap: tokens.spacingHorizontalXS,
-  },
-  traitLabel: {
-    whiteSpace: 'nowrap',
-  },
-  traits: {
-    display: 'flex',
-    flexDirection: 'column',
   },
 });
 
@@ -81,34 +64,12 @@ const ClassCard = ({
         }
       />
       <Text>{classMetadata[id].summary}</Text>
-      <div className={styles.traits}>
-        <Trait
-          label="Hit Die"
-          value={getHitDieString(hitDie, name)}
-        />
-        <Trait
-          label="Saves"
-          value={getSavingThrowString(savingThrows)}
-        />
-        <Trait
-          label="Skills"
-          value={proficiencies.skills}
-        />
-        {proficiencies.tools.length > 0 && (
-          <Trait
-            label="Tool Proficiencies"
-            value={proficiencies.tools}
-          />
-        )}
-        <Trait
-          label="Weapon Training"
-          value={getWeaponsString(proficiencies.weapons)}
-        />
-        <Trait
-          label="Armor Training"
-          value={getArmorString(proficiencies.armor)}
-        />
-      </div>
+      <Traits
+        hitDie={hitDie}
+        name={name}
+        proficiencies={proficiencies}
+        savingThrows={savingThrows}
+      />
     </Card>
   );
 };
