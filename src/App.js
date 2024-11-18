@@ -12,7 +12,9 @@ import {
   tokens,
 } from '@fluentui/react-components';
 import './App.css';
+import { Class } from './classes/class';
 import { Classes } from './classes/classes';
+import { classes } from './constants';
 import { Equipment } from './equipment/equipment';
 import { Monsters } from './monsters/monsters';
 import { Spells } from './spells/spells';
@@ -56,6 +58,8 @@ const useStyles = makeStyles({
   },
 });
 
+const classIds = Object.keys(classes);
+
 const App = () => {
   const styles = useStyles();
   return (
@@ -79,6 +83,9 @@ const App = () => {
             <Route path="/classes" element={<Classes />} />
             <Route path="/monsters" element={<Monsters />} />
             <Route path="/equipment" element={<Equipment />} />
+            {classIds.map(classId => (
+              <Route key={classId} path={`/classes/${classId}`} element={<Class id={classId} />} />
+            ))}
           </Routes>
         </div>
       </div>

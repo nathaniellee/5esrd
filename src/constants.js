@@ -3,6 +3,57 @@ export const sortDirections = {
   descending: 'descending',
 };
 
+export const classes = {
+  barbarian: {
+    id: 'barbarian',
+    name: 'Barbarian',
+  },
+  bard: {
+    id: 'bard',
+    name: 'Bard',
+  },
+  cleric: {
+    id: 'cleric',
+    name: 'Cleric',
+  },
+  druid: {
+    id: 'druid',
+    name: 'Druid',
+  },
+  fighter: {
+    id: 'fighter',
+    name: 'Fighter',
+  },
+  monk: {
+    id: 'monk',
+    name: 'Monk',
+  },
+  paladin: {
+    id: 'paladin',
+    name: 'Paladin',
+  },
+  ranger: {
+    id: 'ranger',
+    name: 'Ranger',
+  },
+  rogue: {
+    id: 'rogue',
+    name: 'Rogue',
+  },
+  sorcerer: {
+    id: 'sorcerer',
+    name: 'Sorcerer',
+  },
+  warlock: {
+    id: 'warlock',
+    name: 'Warlock',
+  },
+  wizard: {
+    id: 'wizard',
+    name: 'Wizard',
+  },
+};
+
 const areasMapping = {
   cone: {
     enum: 'CONE',

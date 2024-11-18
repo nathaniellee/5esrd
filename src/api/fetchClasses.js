@@ -4,12 +4,31 @@ import {
   SORT_FIELDS,
 } from './constants';
 
-const generateClassesQuery = gql`
-  query Classes($order: ClassOrder) {
-    classes(order: $order) {
-      hit_die
-      index
+const coreFields = gql`
+  fragment CoreFields on Class {
+    hit_die
+    index
+    name
+  }
+`;
+
+const savingThrowsFields = gql`
+  fragment SavingThrowsFields on Class {
+    saving_throws {
       name
+      full_name
+      index
+    }
+  }
+`;
+
+const generateClassQuery = gql`
+  ${coreFields}
+  ${savingThrowsFields}
+  query Class($index: String) {
+    class(index: $index) {
+      ...CoreFields
+      ...SavingThrowsFields
       proficiencies {
         name
         index
@@ -17,11 +36,6 @@ const generateClassesQuery = gql`
       }
       proficiency_choices {
         desc
-      }
-      saving_throws {
-        name
-        full_name
-        index
       }
       spellcasting {
         level
@@ -31,6 +45,17 @@ const generateClassesQuery = gql`
           index
         }
       }
+    }
+  }
+`;
+
+const generateClassesQuery = gql`
+  ${coreFields}
+  ${savingThrowsFields}
+  query Classes($order: ClassOrder) {
+    classes(order: $order) {
+      ...CoreFields
+      ...SavingThrowsFields
     }
   }
 `;
@@ -61,14 +86,31 @@ const getSpellcastingAbility = spellcasting => spellcasting
   ? spellcasting.spellcasting_ability.full_name
   : null;
 
-export const transformClasses = klass => ({
+export const transformCoreClass = klass => ({
   hitDie: klass.hit_die,
   id: klass.index,
   name: klass.name,
-  proficiencies: getProficiencies(klass),
   savingThrows: getSavingThrows(klass.saving_throws),
-  spellcastingAbility: getSpellcastingAbility(klass.spellcasting),
 });
+
+export const transformFullClass = (klass) => {
+  const core = transformCoreClass(klass);
+  return {
+    ...core,
+    proficiencies: getProficiencies(klass),
+    spellcastingAbility: getSpellcastingAbility(klass.spellcasting),
+  };
+};
+
+export const fetchClass = async (index) => {
+  const { data } = await apolloClient.query({
+    query: generateClassQuery,
+    variables: {
+      index,
+    },
+  });
+  return data?.class ?? null;
+};
 
 export const fetchClasses = async () => {
   const { data } = await apolloClient.query({

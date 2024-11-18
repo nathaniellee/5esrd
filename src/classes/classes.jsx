@@ -12,7 +12,7 @@ import {
 } from '@fluentui/react-components';
 import {
   fetchClasses,
-  transformClasses,
+  transformCoreClass,
 } from '../api/fetchClasses';
 import { classMetadata } from './constants';
 import {
@@ -95,14 +95,14 @@ export const Classes = () => {
 
   useEffect(() => {
     fetchClasses().then((classes) => {
-      setClasses(classes.map(transformClasses));
+      setClasses(classes.map(transformCoreClass));
     })
   }, []);
 
   return (
     <div className="Classes">
       <Title1>Classes</Title1>
-      {classes.length && (
+      {classes.length > 0 && (
         <div className={styles.container}>
           {classes.map(klass => (
             <ClassCard key={klass.id} {...klass} />

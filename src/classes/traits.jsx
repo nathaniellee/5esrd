@@ -34,7 +34,7 @@ export const Traits = ({
           value={getHitDieString(hitDie, name)}
         />
         <Trait
-          label="Saving Throws"
+          label="Saving Throw Proficiencies"
           value={getSavingThrowString(savingThrows)}
         />
         <Trait
