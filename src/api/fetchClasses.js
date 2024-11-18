@@ -41,7 +41,8 @@ const getProficiencies = klass => klass.proficiencies.reduce((acc, { name, type 
   if (type === 'SAVING_THROWS') {
     return acc;
   }
-  acc[proficiencyTypeMapping[type]].push(name);
+  // Account for the API storing "Light crossbows" as "Crossbows, light".
+  acc[proficiencyTypeMapping[type]].push(name === 'Crossbows, light' ? 'Light crossbows' : name);
   return acc;
 }, {
   armor: [],
