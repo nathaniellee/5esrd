@@ -1,8 +1,12 @@
 import { apolloClient, gql } from './apollo';
+import {
+  SORT_DIRECTION,
+  SORT_FIELDS,
+} from './constants';
 
 const generateClassesQuery = gql`
-  query Classes {
-    classes {
+  query Classes($order: ClassOrder) {
+    classes(order: $order) {
       hit_die
       index
       name
@@ -69,6 +73,12 @@ export const transformClasses = klass => ({
 export const fetchClasses = async () => {
   const { data } = await apolloClient.query({
     query: generateClassesQuery,
+    variables: {
+      order: {
+        by: SORT_FIELDS.name,
+        direction: SORT_DIRECTION.ascending,
+      },
+    },
   });
   return data?.classes ?? [];
 };
