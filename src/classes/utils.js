@@ -20,7 +20,7 @@ export const getArmorString = (armor) => {
     : armorString;
 };
 
-export const getHitDieString = hitDie => `D${hitDie}`;
+export const getHitDieString = (hitDie, name) => `D${hitDie} per ${name} level`;
 
 export const getSavingThrowString = (savingThrows) => savingThrows.join(' and ');
 

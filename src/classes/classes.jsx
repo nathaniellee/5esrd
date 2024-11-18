@@ -84,12 +84,22 @@ const ClassCard = ({
       <div className={styles.traits}>
         <Trait
           label="Hit Die"
-          value={getHitDieString(hitDie)}
+          value={getHitDieString(hitDie, name)}
         />
         <Trait
           label="Saves"
           value={getSavingThrowString(savingThrows)}
         />
+        <Trait
+          label="Skills"
+          value={proficiencies.skills}
+        />
+        {proficiencies.tools.length > 0 && (
+          <Trait
+            label="Tool Proficiencies"
+            value={proficiencies.tools}
+          />
+        )}
         <Trait
           label="Weapon Training"
           value={getWeaponsString(proficiencies.weapons)}
