@@ -30,21 +30,6 @@ const useStyles = makeStyles({
   },
 });
 
-const Trait = ({ label, value }) => {
-  const styles = useStyles();
-  return (
-    <span className={styles.trait}>
-      <Text className={styles.traitLabel} weight='semibold'>{`${label}:`}</Text>
-      <Text>{value}</Text>
-    </span>
-  );
-};
-
-Trait.propTypes = {
-  label: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
-};
-
 const ClassCard = ({
   hitDie,
   id,
