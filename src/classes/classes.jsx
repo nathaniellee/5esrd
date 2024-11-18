@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import {
   Card,
   CardHeader,
+  CardFooter,
+  Divider,
   Subtitle1,
   Text,
   Title1,
@@ -13,7 +15,10 @@ import {
   transformClasses,
 } from '../api/fetchClasses';
 import { classMetadata } from './constants';
-import { Traits } from './traits';
+import {
+  getHitDieString,
+  getSavingThrowString,
+} from './utils';
 
 const gapSize = 24;
 
@@ -28,13 +33,24 @@ const useStyles = makeStyles({
     marginTop: `${gapSize}px`,
     rowGap: `${gapSize}px`,
   },
+  footerDivider: {
+    marginBottom: '8px',
+  },
+  trait: {
+    display: 'flex',
+    columnGap: '4px',
+  },
+  traits: {
+    flexDirection: 'column',
+    flexGrow: 2,
+    justifyContent: 'flex-end',
+  },
 });
 
 const ClassCard = ({
   hitDie,
   id,
   name,
-  proficiencies,
   savingThrows,
 }) => {
   const styles = useStyles();
@@ -49,12 +65,19 @@ const ClassCard = ({
         }
       />
       <Text>{classMetadata[id].summary}</Text>
-      <Traits
-        hitDie={hitDie}
-        name={name}
-        proficiencies={proficiencies}
-        savingThrows={savingThrows}
-      />
+      <CardFooter className={styles.traits}>
+        <div>
+          <Divider className={styles.footerDivider} />
+          <div className={styles.trait}>
+            <Text weight="semibold">Hit Point Die:</Text>
+            <Text>{getHitDieString(hitDie, name)}</Text>
+          </div>
+          <div className={styles.trait}>
+            <Text weight="semibold">Saving Throws:</Text>
+            <Text>{getSavingThrowString(savingThrows)}</Text>
+          </div>
+        </div>
+      </CardFooter>
     </Card>
   );
 };
@@ -63,12 +86,6 @@ ClassCard.propTypes = {
   hitDie: PropTypes.number.isRequired,
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  proficiencies: PropTypes.shape({
-    armor: PropTypes.arrayOf(PropTypes.string).isRequired,
-    skills: PropTypes.string.isRequired,
-    tools: PropTypes.arrayOf(PropTypes.string).isRequired,
-    weapons: PropTypes.arrayOf(PropTypes.string).isRequired,
-  }).isRequired,
   savingThrows: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
