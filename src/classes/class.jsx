@@ -11,6 +11,7 @@ import {
   transformFullClass,
 } from '../api/fetchClasses';
 import { classes } from '../constants';
+import { FeaturesDetails } from './featuresDetails';
 import { FeaturesTable } from './featuresTable';
 import { Traits } from './traits';
 
@@ -27,7 +28,7 @@ export const Class = ({
   const className = classes[id].name;
   const [characterClass, setCharacterClass] = useState(null);
   const traitsTitle = `${className} Traits`;
-  const featuresTableTitle = `${className} Class Features`;
+  const featuresTableTitle = `${className} Features`;
 
   useEffect(() => {
     fetchClass(id).then((klass) => {
@@ -52,6 +53,10 @@ export const Class = ({
             <Subtitle1>{featuresTableTitle}</Subtitle1>
             <FeaturesTable classLevels={characterClass.classLevels} />
           </div>
+          <FeaturesDetails
+            classLevels={characterClass.classLevels}
+            className={className}
+          />
         </div>
       )}
     </div>
