@@ -23,7 +23,7 @@ export const Class = ({
     fetchClass(id).then((klass) => {
       setCharacterClass(transformFullClass(klass));
     });
-  }, []);
+  }, [id]);
 
   return (
     <div>
