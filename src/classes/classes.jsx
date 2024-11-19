@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Card,
   CardHeader,
@@ -53,9 +54,25 @@ const ClassCard = ({
   name,
   savingThrows,
 }) => {
+  const navigate = useNavigate();
   const styles = useStyles();
+
+  const onClickCard = useCallback(() => {
+    navigate(`/classes/${id}`);
+  }, [id, navigate]);
+
+  const onKeyDownCard = useCallback((evt) => {
+    if (evt.key === 'Enter') {
+      onClickCard();
+    }
+  }, [onClickCard]);
+
   return (
-    <Card className={styles.card}>
+    <Card
+      className={styles.card}
+      onClick={onClickCard}
+      onKeyDown={onKeyDownCard}
+    >
       <CardHeader
         header={
           <Subtitle1 weight="semibold">{name}</Subtitle1>
