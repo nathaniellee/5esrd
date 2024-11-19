@@ -29,6 +29,14 @@ const generateClassQuery = gql`
     class(index: $index) {
       ...CoreFields
       ...SavingThrowsFields
+      class_levels {
+        features {
+          desc
+          name
+        }
+        level
+        prof_bonus
+      }
       proficiencies {
         name
         index
@@ -69,6 +77,27 @@ const generateClassesQuery = gql`
     }
   }
 `;
+
+const getClassLevels = ({ class_levels: classLevels }) => classLevels.reduce((acc, classLevel) => {
+  const { level } = classLevel;
+  const features = classLevel.features.map(feature => ({
+    description: feature.desc,
+    name: feature.name,
+  }));
+  const lvl = acc[level];
+
+  if (lvl) {
+    lvl.features = [...lvl.features, ...features];
+    return acc;
+  }
+
+  acc[level] = {
+    features,
+    level,
+    proficiencyBonus: classLevel.prof_bonus,
+  };
+  return acc;
+}, {});
 
 const getEquipment = (klass) => {
   const granted = klass.starting_equipment.map(({ equipment, quantity }) => {
@@ -122,6 +151,7 @@ export const transformFullClass = (klass) => {
   const core = transformCoreClass(klass);
   return {
     ...core,
+    classLevels: getClassLevels(klass),
     proficiencies: getProficiencies(klass),
     spellcastingAbility: getSpellcastingAbility(klass.spellcasting),
     startingEquipment: getEquipment(klass),
