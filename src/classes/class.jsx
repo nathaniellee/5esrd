@@ -36,6 +36,7 @@ export const Class = ({
           name={characterClass.name}
           proficiencies={characterClass.proficiencies}
           savingThrows={characterClass.savingThrows}
+          startingEquipment={characterClass.startingEquipment}
         />
       )}
     </div>

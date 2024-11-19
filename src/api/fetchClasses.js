@@ -45,6 +45,16 @@ const generateClassQuery = gql`
           index
         }
       }
+      starting_equipment {
+        equipment {
+          name
+          index
+        }
+        quantity
+      }
+      starting_equipment_options {
+        desc
+      }
     }
   }
 `;
@@ -59,6 +69,21 @@ const generateClassesQuery = gql`
     }
   }
 `;
+
+const getEquipment = (klass) => {
+  const granted = klass.starting_equipment.map(({ equipment, quantity }) => {
+    if (quantity === 1) {
+      return equipment.name;
+    }
+    return `${quantity} ${equipment.name}s`;
+  });
+  const options = klass.starting_equipment_options.map(({ desc }) => desc);
+
+  return {
+    granted,
+    options,
+  };
+};
 
 const proficiencyTypeMapping = {
   ARMOR: 'armor',
@@ -99,6 +124,7 @@ export const transformFullClass = (klass) => {
     ...core,
     proficiencies: getProficiencies(klass),
     spellcastingAbility: getSpellcastingAbility(klass.spellcasting),
+    startingEquipment: getEquipment(klass),
   };
 };
 

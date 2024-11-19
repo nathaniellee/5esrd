@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import './classes.css';
+import { StartingEquipment } from './startingEquipment';
 import {
   getArmorString,
   getHitDieString,
@@ -25,6 +26,7 @@ export const Traits = ({
   name,
   proficiencies,
   savingThrows,
+  startingEquipment,
 }) => {
   return (
     <table className="TraitsTable">
@@ -55,6 +57,15 @@ export const Traits = ({
           label="Armor Training"
           value={getArmorString(proficiencies.armor)}
         />
+        <Trait
+          label="Starting Equipment"
+          value={
+            <StartingEquipment
+              granted={startingEquipment.granted}
+              options={startingEquipment.options}
+            />
+          }
+        />
       </tbody>
     </table>
   );
@@ -70,4 +81,8 @@ Traits.propTypes = {
     weapons: PropTypes.arrayOf(PropTypes.string).isRequired,
   }).isRequired,
   savingThrows: PropTypes.arrayOf(PropTypes.string).isRequired,
+  startingEquipment: PropTypes.shape({
+    granted: PropTypes.arrayOf(PropTypes.string).isRequired,
+    options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  }).isRequired,
 };
