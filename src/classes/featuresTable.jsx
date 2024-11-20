@@ -20,11 +20,16 @@ const useStyles = makeStyles({
 const orderedLevels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 
 const FeaturesTableRow = ({ classLevel }) => {
+  const { features } = classLevel;
+  const featuresString = features.length === 0
+    ? '--'
+    : features.map(({ name }) => name).join(', ');
+
   return (
     <TableRow>
       <TableCell>{classLevel.level}</TableCell>
       <TableCell>{classLevel.proficiencyBonus}</TableCell>
-      <TableCell>{classLevel.features.map(({ name }) => name).join(', ')}</TableCell>
+      <TableCell>{featuresString}</TableCell>
     </TableRow>
   );
 };
